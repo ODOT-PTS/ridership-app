@@ -34,11 +34,8 @@
 }
 
 .title {
-  margin: 0;
+  margin: 10px 0 5px;
   line-height: 1.15;
-  font-size: 4rem;
-}
-
-.title {
-  text-align: center;
+  font-size: 1.1rem;
+  font-weight: bold;
 }
