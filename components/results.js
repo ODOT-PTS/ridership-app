@@ -19,7 +19,7 @@ const Results = ({ ridershipData, filters, routes }) => {
 
     let routeText = ''
     if (filters.routeId !== 'all') {
-      const route = routes.find(route => route.route_id === routeId)
+      const route = routes.find(route => route.route_id === filters.routeId)
       routeText = `for Route ${formatRouteName(route)}`
     }
     

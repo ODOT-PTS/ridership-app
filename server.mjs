@@ -24,12 +24,7 @@ app.prepare().then(async () => {
   })
 
   server.get('/ridership-data', async (req, res) => {
-    const ridershipData = await queryRidershipData({
-      route_id: req.query.route_id,
-      direction_id: req.query.direction_id,
-      start_date: req.query.start_date,
-      end_date: req.query.end_date
-    })
+    const ridershipData = await queryRidershipData(req.query)
     res.json(ridershipData)
   })
 

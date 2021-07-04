@@ -60,42 +60,9 @@ const RidershipByDayOfWeek = ({ ridershipData }) => {
     }
   }
 
-  const dataPoints = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday'
-  ].map(dayOfWeek => ({
-    label: dayOfWeek,
-    service_day_of_week: dayOfWeek,
-    boardings: 0,
-    alightings: 0,
-    load_count: 0
-  }))
-
-  for (const boardAlight of ridershipData) {
-    const dayOfWeek = DateTime.fromFormat(boardAlight.service_date.toString(), 'yyyyMMdd').toFormat('cccc')
-    let dataPoint = dataPoints.find(item => item.service_day_of_week === dayOfWeek);
-
-    if (boardAlight.boardings !== null) {
-      dataPoint.boardings += boardAlight.boardings;
-    }
-
-    if (boardAlight.alightings !== null) {
-      dataPoint.alightings += boardAlight.alightings;
-    }
-
-    if (boardAlight.load_count !== null) {
-      dataPoint.load_count += boardAlight.load_count;
-    }
-  }
-
-  data.labels = dataPoints.map(item => item.label);
-  data.datasets[0].data = dataPoints.map(item => item.boardings);
-  data.datasets[1].data = dataPoints.map(item => item.alightings);
+  data.labels = ridershipData.map(item => item.label);
+  data.datasets[0].data = ridershipData.map(item => item.boardings);
+  data.datasets[1].data = ridershipData.map(item => item.alightings);
 
   return <Line data={data} options={options} />
 }

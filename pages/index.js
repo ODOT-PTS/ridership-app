@@ -45,7 +45,8 @@ export default function Home() {
         start_date: DateTime.fromJSDate(filters.dateRange[0]).toISODate(),
         end_date: DateTime.fromJSDate(filters.dateRange[1]).toISODate(),
         route_id: filters.routeId,
-        direction_id: filters.directionId
+        direction_id: filters.directionId,
+        grouping: filters.grouping
       };
 
       const response = await fetch('/ridership-data?' + new URLSearchParams(parameters))

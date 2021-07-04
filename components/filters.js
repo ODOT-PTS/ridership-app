@@ -18,7 +18,7 @@ const Filters = ({ routes, visualize }) => {
       <label className="block">
         <span className="text-gray-700">Date Range</span>
 
-        <div className="mt-1 block w-full">
+        <div className="mt-1 block">
           <DatePicker
             selectsRange={true}
             startDate={filters.dateRange[0]}
