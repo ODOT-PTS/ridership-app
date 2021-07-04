@@ -6,20 +6,20 @@ import { DateTime } from 'luxon'
 import 'react-datepicker/dist/react-datepicker.css'
 import styles from '../styles/Home.module.css'
 
-import RidershipByDay from '../components/ridership-by-day.js'
-import RidershipByDayOfWeek from '../components/ridership-by-day-of-week.js'
-import RidershipByDayOfWeekType from '../components/ridership-by-day-of-week-type.js'
-import RidershipByTimeOfDay from '../components/ridership-by-time-of-day.js'
+import Results from '../components/results.js'
 import { formatRouteName } from '../lib/formatters.js'
 
 export default function Home() {
-  const [dateRange, setDateRange] = useState([null, null])
-  const [startDate, endDate] = dateRange
+  const [filters, setFilters] = useState({
+    dateRange: [null, null],
+    routeId: 'all',
+    directionId: 'all'
+  })
   const [grouping, setGrouping] = useState('day')
-  const [routeId, setRouteId] = useState('all')
-  const [directionId, setDirectionId] = useState('all')
   const [routes, setRoutes] = useState()
   const [ridershipData, setRidershipData] = useState()
+
+  const [startDate, endDate] = filters.dateRange
 
   useEffect(async () => {
     try {
@@ -45,10 +45,10 @@ export default function Home() {
 
     try {
       const parameters = {
-        startDate: DateTime.fromJSDate(startDate).toISODate(),
-        endDate: DateTime.fromJSDate(endDate).toISODate(),
-        route_id: routeId,
-        direction_id: directionId
+        start_date: DateTime.fromJSDate(startDate).toISODate(),
+        end_date: DateTime.fromJSDate(endDate).toISODate(),
+        route_id: filters.routeId,
+        direction_id: filters.directionId
       };
 
       const response = await fetch('/ridership-data?' + new URLSearchParams(parameters))
@@ -60,46 +60,6 @@ export default function Home() {
 
     } catch (error) {
       console.warn(error)
-    }
-  }
-
-  const formatChartTitle = () => {
-    const dateRangeText = `${DateTime.fromJSDate(startDate).toISODate()} to ${DateTime.fromJSDate(endDate).toISODate()}`
-
-    let routeText = ''
-    if (routeId !== 'all') {
-      const route = routes.find(route => route.route_id === routeId)
-      routeText = `for Route ${formatRouteName(route)}`
-    }
-    
-    if (grouping === 'day') {
-      return (
-        <>
-          <h2 className="inline-block text-2xl mr-2 font-bold">Ridership by Day</h2>
-          {dateRangeText} {routeText}
-        </>
-      )
-    } else if (grouping === 'day-of-week') {
-      return (
-        <>
-          <h2 className="inline-block text-2xl mr-2 font-bold">Ridership by Day of Week</h2>
-          {dateRangeText} {routeText}
-        </>
-      )
-    } else if (grouping === 'day-of-week-type') {
-      return (
-        <>
-          <h2 className="inline-block text-2xl mr-2 font-bold">Ridership by Weekday vs Weekend</h2>
-          {dateRangeText} {routeText}
-        </>
-      )
-    } else if (grouping === 'time-of-day') {
-      return (
-        <>
-          <h2 className="inline-block text-2xl mr-2 font-bold">Ridership by Time of Day</h2>
-          {dateRangeText} {routeText}
-        </>
-      )
     }
   }
 
@@ -125,7 +85,7 @@ export default function Home() {
                   startDate={startDate}
                   endDate={endDate}
                   onChange={(update) => {
-                    setDateRange(update);
+                    setFilters({ ...filters, dateRange: update });
                   }}
                   isClearable={true}
                 />
@@ -149,7 +109,7 @@ export default function Home() {
               <span className="text-gray-700">Route</span>
               <select
                 className="mt-1 block w-full"
-                onChange={event => setRouteId(event.target.value)}
+                onChange={event => setFilters({ ...filters, routeId: event.target.value })}
               >
                 <option value="all">All</option>
                 {routes && routes.map(route => <option key={route.route_id} value={route.route_id}>{formatRouteName(route)}</option>)}
@@ -160,8 +120,8 @@ export default function Home() {
               <span className="text-gray-700">Direction</span>
               <select
                 className="mt-1 block w-full"
-                onChange={event => setDirectionId(event.target.value)}
-                value={directionId}
+                onChange={event => setFilters({ ...filters, directionId: event.target.value })}
+                value={filters.directionId}
               >
                 <option value="all">Both</option>
                 <option value="0">0</option>
@@ -175,11 +135,7 @@ export default function Home() {
             >Visualize</button>
           </div>
           <div className="flex-grow-1 w-full ml-5 mt-2">
-            {ridershipData && formatChartTitle()}
-            {ridershipData && grouping === 'day' && <RidershipByDay ridershipData={ridershipData} />}
-            {ridershipData && grouping === 'day-of-week' && <RidershipByDayOfWeek ridershipData={ridershipData} />}
-            {ridershipData && grouping === 'day-of-week-type' && <RidershipByDayOfWeekType ridershipData={ridershipData} />}
-            {ridershipData && grouping === 'time-of-day' && <RidershipByTimeOfDay ridershipData={ridershipData} />}
+            <Results ridershipData={ridershipData} filters={filters} grouping={grouping} routes={routes} />
           </div>
         </div>
       </main>
