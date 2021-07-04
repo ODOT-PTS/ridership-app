@@ -5,6 +5,7 @@ import { DateTime } from 'luxon'
 import styles from '../styles/Home.module.css'
 
 import Filters from '../components/filters.js'
+import Loading from '../components/loading.js'
 import Results from '../components/results.js'
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
   const [grouping, setGrouping] = useState('day')
   const [routes, setRoutes] = useState()
   const [ridershipData, setRidershipData] = useState()
+  const [loading, setLoading] = useState(false)
 
   useEffect(async () => {
     try {
@@ -33,9 +35,11 @@ export default function Home() {
   }, [])
 
   const visualize = async () => {
+    setLoading(true)
     // Validation
     if (filters.dateRange[0] === null || filters.dateRange[1] === null) {
       alert('Date range is required')
+      setLoading(false)
       return
     }
 
@@ -54,7 +58,9 @@ export default function Home() {
         setRidershipData(results)
       }
 
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       console.warn(error)
     }
   }
@@ -81,6 +87,7 @@ export default function Home() {
             />
           </div>
           <div className="flex-grow-1 w-full ml-5 mt-2">
+            <Loading loading={loading} />
             <Results
               ridershipData={ridershipData}
               filters={filters}
