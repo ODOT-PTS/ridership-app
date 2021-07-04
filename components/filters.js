@@ -1,10 +1,18 @@
 import DatePicker from 'react-datepicker'
+import { useState } from 'react'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
 import { formatRouteName } from '../lib/formatters.js'
 
-const Filters = ({ filters, setFilters, setGrouping, routes, visualize }) => {
+const Filters = ({ routes, visualize }) => {
+  const [filters, setFilters] = useState({
+    dateRange: [null, null],
+    routeId: 'all',
+    directionId: 'all',
+    grouping: 'day'
+  })
+
   return (
     <>
       <label className="block">
@@ -27,7 +35,7 @@ const Filters = ({ filters, setFilters, setGrouping, routes, visualize }) => {
         <span className="text-gray-700">Group By</span>
         <select
           className="mt-1 block w-full"
-          onChange={event => setGrouping(event.target.value)}
+          onChange={event => setFilters({ ...filters, grouping: event.target.value })}
         >
           <option value="day">Day</option>
           <option value="day-of-week">Day of week</option>
@@ -62,7 +70,7 @@ const Filters = ({ filters, setFilters, setGrouping, routes, visualize }) => {
 
       <button
         className="bg-blue-700 px-5 py-3 text-sm shadow-sm font-medium tracking-wider border text-blue-100 rounded-full hover:shadow-lg hover:bg-blue-800"
-        onClick={() => visualize()}
+        onClick={() => visualize(filters)}
       >Visualize</button>
     </>
   )

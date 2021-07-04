@@ -7,7 +7,11 @@ import RidershipByTimeOfDay from './ridership-by-time-of-day.js'
 
 import { formatRouteName } from '../lib/formatters.js'
 
-const Results = ({ ridershipData, filters, grouping, routes }) => {
+const Results = ({ ridershipData, filters, routes }) => {
+  if (!ridershipData || !filters) {
+    return null
+  }
+
   const [startDate, endDate] = filters.dateRange
 
   const formatChartTitle = () => {
@@ -19,28 +23,28 @@ const Results = ({ ridershipData, filters, grouping, routes }) => {
       routeText = `for Route ${formatRouteName(route)}`
     }
     
-    if (grouping === 'day') {
+    if (filters.grouping === 'day') {
       return (
         <>
           <h2 className="inline-block text-2xl mr-2 font-bold">Ridership by Day</h2>
           {dateRangeText} {routeText}
         </>
       )
-    } else if (grouping === 'day-of-week') {
+    } else if (filters.grouping === 'day-of-week') {
       return (
         <>
           <h2 className="inline-block text-2xl mr-2 font-bold">Ridership by Day of Week</h2>
           {dateRangeText} {routeText}
         </>
       )
-    } else if (grouping === 'day-of-week-type') {
+    } else if (filters.grouping === 'day-of-week-type') {
       return (
         <>
           <h2 className="inline-block text-2xl mr-2 font-bold">Ridership by Weekday vs Weekend</h2>
           {dateRangeText} {routeText}
         </>
       )
-    } else if (grouping === 'time-of-day') {
+    } else if (filters.grouping === 'time-of-day') {
       return (
         <>
           <h2 className="inline-block text-2xl mr-2 font-bold">Ridership by Time of Day</h2>
@@ -52,11 +56,11 @@ const Results = ({ ridershipData, filters, grouping, routes }) => {
 
   return (
     <>
-      {ridershipData && formatChartTitle()}
-      {ridershipData && grouping === 'day' && <RidershipByDay ridershipData={ridershipData} />}
-      {ridershipData && grouping === 'day-of-week' && <RidershipByDayOfWeek ridershipData={ridershipData} />}
-      {ridershipData && grouping === 'day-of-week-type' && <RidershipByDayOfWeekType ridershipData={ridershipData} />}
-      {ridershipData && grouping === 'time-of-day' && <RidershipByTimeOfDay ridershipData={ridershipData} />}
+      {formatChartTitle()}
+      {filters.grouping === 'day' && <RidershipByDay ridershipData={ridershipData} startDate={startDate} endDate={endDate} />}
+      {filters.grouping === 'day-of-week' && <RidershipByDayOfWeek ridershipData={ridershipData} />}
+      {filters.grouping === 'day-of-week-type' && <RidershipByDayOfWeekType ridershipData={ridershipData} />}
+      {filters.grouping === 'time-of-day' && <RidershipByTimeOfDay ridershipData={ridershipData} />}
     </>
   )
 }

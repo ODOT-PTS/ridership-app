@@ -71,7 +71,6 @@ class LineChart extends React.PureComponent {
     const dataPoints = [];
 
     for (const boardAlight of ridershipData) {
-      console.log(boardAlight)
       let dataPoint = dataPoints.find(item => item.service_date === boardAlight.service_date);
 
       if (!dataPoint) {

@@ -9,12 +9,7 @@ import Loading from '../components/loading.js'
 import Results from '../components/results.js'
 
 export default function Home() {
-  const [filters, setFilters] = useState({
-    dateRange: [null, null],
-    routeId: 'all',
-    directionId: 'all'
-  })
-  const [grouping, setGrouping] = useState('day')
+  const [appliedFilters, setAppliedFilters] = useState()
   const [routes, setRoutes] = useState()
   const [ridershipData, setRidershipData] = useState()
   const [loading, setLoading] = useState(false)
@@ -34,8 +29,10 @@ export default function Home() {
     }
   }, [])
 
-  const visualize = async () => {
+  const visualize = async (filters) => {
+    setRidershipData()
     setLoading(true)
+
     // Validation
     if (filters.dateRange[0] === null || filters.dateRange[1] === null) {
       alert('Date range is required')
@@ -55,9 +52,9 @@ export default function Home() {
 
       if (response.ok) {
         const results = await response.json()
+        setAppliedFilters(filters)
         setRidershipData(results)
       }
-
       setLoading(false)
     } catch (error) {
       setLoading(false)
@@ -79,9 +76,6 @@ export default function Home() {
               Ridership Data Visualization
             </h1>
             <Filters
-              filters={filters}
-              setFilters={setFilters}
-              setGrouping={setGrouping}
               routes={routes}
               visualize={visualize}
             />
@@ -90,8 +84,7 @@ export default function Home() {
             <Loading loading={loading} />
             <Results
               ridershipData={ridershipData}
-              filters={filters}
-              grouping={grouping}
+              filters={appliedFilters}
               routes={routes}
             />
           </div>
