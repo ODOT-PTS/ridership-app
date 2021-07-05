@@ -39,7 +39,7 @@ const Filters = ({ routes, visualize }) => {
         >
           <option value="day">Day</option>
           <option value="day-of-week">Day of week</option>
-          <option value="day-of-week-type">(Weekday vs Sat vs Sun)</option>
+          <option value="day-of-week-type">Weekday vs Sat vs Sun</option>
           <option value="time-of-day">Time of day</option>
         </select>
       </label>
