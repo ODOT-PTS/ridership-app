@@ -46,6 +46,7 @@ export default function Home() {
         end_date: DateTime.fromJSDate(filters.dateRange[1]).toISODate(),
         route_id: filters.routeId,
         direction_id: filters.directionId,
+        stop_id: filters.stopId,
         grouping: filters.grouping
       };
 

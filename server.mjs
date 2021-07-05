@@ -4,7 +4,7 @@ import express from 'express'
 import next from 'next'
 import { openDb } from 'gtfs'
 
-import { queryRidershipData, queryRoutesAndDirections } from './lib/api.mjs'
+import { queryStops, queryRidershipData, queryRoutesAndDirections } from './lib/api.mjs'
 
 dotenv.config()
 
@@ -21,6 +21,16 @@ app.prepare().then(async () => {
   server.get('/routes', async (req, res) => {
     const routes = await queryRoutesAndDirections()
     res.json(routes)
+  })
+
+  server.get('/stops', async (req, res) => {
+    try {
+      const stops = await queryStops(req.query)
+      res.json(stops)
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ error: true })
+    }
   })
 
   server.get('/ridership-data', async (req, res) => {
