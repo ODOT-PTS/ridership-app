@@ -59,9 +59,9 @@ const RidershipByDay = ({ ridershipData, startDate, endDate }) => {
     }
   }
 
-  data.labels = ridershipData.map(item => item.label);
-  data.datasets[0].data = ridershipData.map(item => item.boardings);
-  data.datasets[1].data = ridershipData.map(item => item.alightings);
+  data.labels = ridershipData.map(item => item.label)
+  data.datasets[0].data = ridershipData.map(item => item.boardings)
+  data.datasets[1].data = ridershipData.map(item => item.alightings)
 
   return <Line data={data} options={options} />
 }

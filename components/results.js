@@ -22,7 +22,7 @@ const Results = ({ ridershipData, filters, routes }) => {
       const route = routes.find(route => route.route_id === filters.routeId)
       routeText = `for Route ${formatRouteName(route)}`
     }
-    
+
     if (filters.grouping === 'day') {
       return (
         <>

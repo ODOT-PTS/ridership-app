@@ -43,7 +43,7 @@ const Filters = ({ routes, visualize }) => {
             startDate={filters.dateRange[0]}
             endDate={filters.dateRange[1]}
             onChange={(update) => {
-              setFilters({ ...filters, dateRange: update });
+              setFilters({ ...filters, dateRange: update })
             }}
             isClearable={true}
           />
@@ -79,7 +79,7 @@ const Filters = ({ routes, visualize }) => {
         </select>
       </label>
 
-      <label className="block">
+      {filters.routeId !== 'all' && <label className="block">
         <span className="text-gray-700">Direction</span>
         <select
           className="mt-1 block w-full"
@@ -94,7 +94,7 @@ const Filters = ({ routes, visualize }) => {
           <option value="0">0</option>
           <option value="1">1</option>
         </select>
-      </label>
+      </label>}
 
       {filters.directionId !== 'all' && <label className="block">
         <span className="text-gray-700">Stop</span>
