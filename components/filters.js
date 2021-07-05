@@ -5,7 +5,8 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 import { formatRouteName } from '../lib/formatters.js'
 
-const Filters = ({ routes, visualize }) => {
+const Filters = ({ visualize }) => {
+  const [routes, setRoutes] = useState()
   const [stops, setStops] = useState()
   const [filters, setFilters] = useState({
     dateRange: [null, null],
@@ -14,6 +15,21 @@ const Filters = ({ routes, visualize }) => {
     stopId: 'all',
     grouping: 'day'
   })
+
+  useEffect(async () => {
+    try {
+      const response = await fetch('/routes')
+  
+      if (response.ok) {
+        const data = await response.json()
+        setRoutes(data)
+      } else {
+        throw new Error('Bad request')
+      }
+    } catch (error) {
+      console.warn(error)
+    }
+  }, [])
 
   useEffect(async () => {
     if (filters.routeId !== 'all' && filters.directionId !== 'all') {
@@ -70,6 +86,7 @@ const Filters = ({ routes, visualize }) => {
           onChange={event => setFilters({
             ...filters,
             routeId: event.target.value,
+            routeName: event.target.value !== 'all' ? formatRouteName(routes.find(route => route.route_id === event.target.value)) : '',
             directionId: 'all',
             stopId: 'all'
           })}
@@ -86,7 +103,8 @@ const Filters = ({ routes, visualize }) => {
           onChange={event => setFilters({
             ...filters,
             directionId: event.target.value,
-            stopId: 'all'
+            stopId: 'all',
+            stopName: ''
           })}
           value={filters.directionId}
         >
@@ -100,7 +118,11 @@ const Filters = ({ routes, visualize }) => {
         <span className="text-gray-700">Stop</span>
         <select
           className="mt-1 block w-full"
-          onChange={event => setFilters({ ...filters, stopId: event.target.value })}
+          onChange={event => setFilters({
+            ...filters,
+            stopId: event.target.value,
+            stopName: event.target.value !== 'all' ? stops.find(stop => stop.stop_id === event.target.value).stop_name : '',
+          })}
           value={filters.stopId}
         >
           <option value="all">All</option>
@@ -109,7 +131,7 @@ const Filters = ({ routes, visualize }) => {
       </label>}
 
       <button
-        className="bg-blue-700 px-5 py-3 text-sm shadow-sm font-medium tracking-wider border text-blue-100 rounded-full hover:shadow-lg hover:bg-blue-800"
+        className="btn-blue"
         onClick={() => visualize(filters)}
       >Visualize</button>
     </>

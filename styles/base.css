@@ -1,0 +1,7 @@
+.btn-blue {
+  @apply bg-blue-700 px-5 py-2 text-lg shadow-sm font-medium tracking-wider border text-blue-100 rounded-lg hover:shadow-lg hover:bg-blue-600;
+}
+
+.highlight {
+  @apply bg-yellow-200 text-black font-bold px-1 py-1;
+}

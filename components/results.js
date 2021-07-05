@@ -5,9 +5,7 @@ import RidershipByDayOfWeek from './ridership-by-day-of-week.js'
 import RidershipByDayOfWeekType from './ridership-by-day-of-week-type.js'
 import RidershipByTimeOfDay from './ridership-by-time-of-day.js'
 
-import { formatRouteName } from '../lib/formatters.js'
-
-const Results = ({ ridershipData, filters, routes }) => {
+const Results = ({ ridershipData, filters }) => {
   if (!ridershipData || !filters) {
     return null
   }
@@ -15,43 +13,35 @@ const Results = ({ ridershipData, filters, routes }) => {
   const [startDate, endDate] = filters.dateRange
 
   const formatChartTitle = () => {
-    const dateRangeText = `${DateTime.fromJSDate(startDate).toISODate()} to ${DateTime.fromJSDate(endDate).toISODate()}`
+    const dateRangeText =<><span className="highlight">{DateTime.fromJSDate(startDate).toISODate()}</span> to <span className="highlight">{DateTime.fromJSDate(endDate).toISODate()}</span></>
 
     let routeText = ''
     if (filters.routeId !== 'all') {
-      const route = routes.find(route => route.route_id === filters.routeId)
-      routeText = `for Route ${formatRouteName(route)}`
+      routeText = <>for <span className="highlight">Route {filters.routeName}</span></>
     }
 
-    if (filters.grouping === 'day') {
-      return (
-        <>
-          <h2 className="inline-block text-2xl mr-2 font-bold">Ridership by Day</h2>
-          {dateRangeText} {routeText}
-        </>
-      )
-    } else if (filters.grouping === 'day-of-week') {
-      return (
-        <>
-          <h2 className="inline-block text-2xl mr-2 font-bold">Ridership by Day of Week</h2>
-          {dateRangeText} {routeText}
-        </>
-      )
-    } else if (filters.grouping === 'day-of-week-type') {
-      return (
-        <>
-          <h2 className="inline-block text-2xl mr-2 font-bold">Ridership by Weekday vs Weekend</h2>
-          {dateRangeText} {routeText}
-        </>
-      )
-    } else if (filters.grouping === 'time-of-day') {
-      return (
-        <>
-          <h2 className="inline-block text-2xl mr-2 font-bold">Ridership by Time of Day</h2>
-          {dateRangeText} {routeText}
-        </>
-      )
+    let stopText = ''
+    if (filters.stopId !== 'all') {
+      stopText = <>for <span className="highlight">Stop {filters.stopName}</span></>
     }
+
+    let title = ''
+    if (filters.grouping === 'day') {
+      title = 'Ridership by Day'
+    } else if (filters.grouping === 'day-of-week') {
+      title = 'Ridership by Day of Week'
+    } else if (filters.grouping === 'day-of-week-type') {
+      title = 'Ridership by Weekday vs Weekend'
+    } else if (filters.grouping === 'time-of-day') {
+      title = 'Ridership by Time of Day'
+    }
+
+    return (
+      <>
+        <h2 className="inline-block text-2xl mr-2 font-bold">{title}</h2>
+        {dateRangeText} {routeText} {stopText}
+      </>
+    )
   }
 
   return (

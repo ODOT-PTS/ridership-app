@@ -10,24 +10,8 @@ import Results from '../components/results.js'
 
 export default function Home() {
   const [appliedFilters, setAppliedFilters] = useState()
-  const [routes, setRoutes] = useState()
   const [ridershipData, setRidershipData] = useState()
   const [loading, setLoading] = useState(false)
-
-  useEffect(async () => {
-    try {
-      const response = await fetch('/routes')
-  
-      if (response.ok) {
-        const data = await response.json()
-        setRoutes(data)
-      } else {
-        throw new Error('Bad request')
-      }
-    } catch (error) {
-      console.warn(error)
-    }
-  }, [])
 
   const visualize = async (filters) => {
     setRidershipData()
@@ -78,7 +62,6 @@ export default function Home() {
               Ridership Data Visualization
             </h1>
             <Filters
-              routes={routes}
               visualize={visualize}
             />
           </div>
@@ -87,7 +70,6 @@ export default function Home() {
             <Results
               ridershipData={ridershipData}
               filters={appliedFilters}
-              routes={routes}
             />
           </div>
         </div>
