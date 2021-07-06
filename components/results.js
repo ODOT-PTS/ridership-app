@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
 
+import ResultsTable from './results-table.js'
 import RidershipByDay from './ridership-by-day.js'
 import RidershipByDayOfWeek from './ridership-by-day-of-week.js'
 import RidershipByDayOfWeekType from './ridership-by-day-of-week-type.js'
@@ -55,6 +56,7 @@ const Results = ({ ridershipData, filters }) => {
       {filters.grouping === 'day-of-week' && <RidershipByDayOfWeek ridershipData={ridershipData} />}
       {filters.grouping === 'day-of-week-type' && <RidershipByDayOfWeekType ridershipData={ridershipData} />}
       {filters.grouping === 'time-of-day' && <RidershipByTimeOfDay ridershipData={ridershipData} />}
+      <ResultsTable ridershipData={ridershipData} filters={filters} />
     </>
   )
 }

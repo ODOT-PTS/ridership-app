@@ -133,7 +133,7 @@ const Filters = ({ visualize }) => {
       <button
         className="btn-blue"
         onClick={() => visualize(filters)}
-      >Visualize</button>
+      >📈 Visualize</button>
     </>
   )
 }
