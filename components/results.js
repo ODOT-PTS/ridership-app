@@ -47,6 +47,10 @@ const Results = ({ ridershipData, filters }) => {
   return (
     <>
       {formatChartTitle()}
+      {(!ridershipData || ridershipData.length === 0) && <div className="text-center my-16">
+        <div className="text-8xl">⚠️</div>
+        <div className="font-bold text-2xl">No data</div>
+      </div>}
       {filters.grouping === 'day' && <RidershipByDay ridershipData={ridershipData} startDate={startDate} endDate={endDate} />}
       {filters.grouping === 'day-of-week' && <RidershipByDayOfWeek ridershipData={ridershipData} />}
       {filters.grouping === 'day-of-week-type' && <RidershipByDayOfWeekType ridershipData={ridershipData} />}

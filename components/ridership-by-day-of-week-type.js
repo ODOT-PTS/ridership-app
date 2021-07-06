@@ -3,9 +3,7 @@ import { Bar } from 'react-chartjs-2'
 
 const RidershipByDayOfWeekType = ({ ridershipData }) => {
   if (!ridershipData || ridershipData.length === 0) {
-    return (
-      <div>No data</div>
-    )
+    return null
   }
 
   const data = {

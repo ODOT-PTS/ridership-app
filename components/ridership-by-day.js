@@ -3,9 +3,7 @@ import { Line } from 'react-chartjs-2'
 
 const RidershipByDay = ({ ridershipData, startDate, endDate }) => {
   if (!ridershipData || ridershipData.length === 0) {
-    return (
-      <div>No data</div>
-    )
+    return null
   }
 
   const data = {
