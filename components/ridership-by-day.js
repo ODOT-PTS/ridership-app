@@ -9,12 +9,12 @@ const RidershipByDay = ({ ridershipData, startDate, endDate }) => {
   }
 
   const data = {
-    labels: [],
+    labels: ridershipData.map(item => item.label),
     datasets: [{
       label: 'Boardings',
       backgroundColor: 'rgb(75, 192, 192)',
       borderColor: 'rgb(75, 192, 192)',
-      data: [],
+      data: ridershipData.map(item => item.boardings),
       lineTension: 0,
       fill: false
     }, {
@@ -22,7 +22,7 @@ const RidershipByDay = ({ ridershipData, startDate, endDate }) => {
       fill: false,
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(255, 99, 132)',
-      data: [],
+      data: ridershipData.map(item => item.alightings),
       lineTension: 0
     }]
   }
@@ -58,10 +58,6 @@ const RidershipByDay = ({ ridershipData, startDate, endDate }) => {
       }]
     }
   }
-
-  data.labels = ridershipData.map(item => item.label)
-  data.datasets[0].data = ridershipData.map(item => item.boardings)
-  data.datasets[1].data = ridershipData.map(item => item.alightings)
 
   return <Line data={data} options={options} />
 }

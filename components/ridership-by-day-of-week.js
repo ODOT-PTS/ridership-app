@@ -1,6 +1,5 @@
 import React from 'react'
 import { Line } from 'react-chartjs-2'
-import { DateTime } from 'luxon'
 
 const RidershipByDayOfWeek = ({ ridershipData }) => {
   if (!ridershipData || ridershipData.length === 0) {
@@ -10,12 +9,12 @@ const RidershipByDayOfWeek = ({ ridershipData }) => {
   }
 
   const data = {
-    labels: [],
+    labels: ridershipData.map(item => item.label),
     datasets: [{
       label: 'Boardings',
       backgroundColor: 'rgb(75, 192, 192)',
       borderColor: 'rgb(75, 192, 192)',
-      data: [],
+      data: ridershipData.map(item => item.boardings),
       lineTension: 0,
       fill: false
     }, {
@@ -23,7 +22,7 @@ const RidershipByDayOfWeek = ({ ridershipData }) => {
       fill: false,
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(255, 99, 132)',
-      data: [],
+      data: ridershipData.map(item => item.alightings),
       lineTension: 0
     }]
   }
@@ -59,10 +58,6 @@ const RidershipByDayOfWeek = ({ ridershipData }) => {
       }]
     }
   }
-
-  data.labels = ridershipData.map(item => item.label);
-  data.datasets[0].data = ridershipData.map(item => item.boardings);
-  data.datasets[1].data = ridershipData.map(item => item.alightings);
 
   return <Line data={data} options={options} />
 }
