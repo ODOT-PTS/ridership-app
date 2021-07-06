@@ -1,5 +1,5 @@
 import React from 'react'
-import { Line } from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2'
 
 const RidershipByDayOfWeek = ({ ridershipData }) => {
   if (!ridershipData || ridershipData.length === 0) {
@@ -14,16 +14,12 @@ const RidershipByDayOfWeek = ({ ridershipData }) => {
       label: 'Boardings',
       backgroundColor: 'rgb(75, 192, 192)',
       borderColor: 'rgb(75, 192, 192)',
-      data: ridershipData.map(item => item.boardings),
-      lineTension: 0,
-      fill: false
+      data: ridershipData.map(item => item.boardings)
     }, {
       label: 'Alightings',
-      fill: false,
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(255, 99, 132)',
-      data: ridershipData.map(item => item.alightings),
-      lineTension: 0
+      data: ridershipData.map(item => item.alightings)
     }]
   }
   
@@ -59,7 +55,7 @@ const RidershipByDayOfWeek = ({ ridershipData }) => {
     }
   }
 
-  return <Line data={data} options={options} />
+  return <Bar data={data} options={options} />
 }
 
 export default RidershipByDayOfWeek
