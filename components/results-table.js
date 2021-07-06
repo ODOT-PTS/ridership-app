@@ -3,16 +3,8 @@ import { Grid, _ } from 'gridjs-react'
 import 'gridjs/dist/theme/mermaid.css'
 import { DateTime } from 'luxon'
 
-const ResultsTable = ({ ridershipData, filters }) => {
-  if (!ridershipData || ridershipData.length === 0 || !filters) {
-    return null
-  }
-
-  const columns = [
-    {
-      id: 'label',
-      name: 'Label'
-    },
+const getColumns = filters => {
+  const dataColumns = [
     {
       id: 'boardings',
       name: 'Boardings'
@@ -27,6 +19,59 @@ const ResultsTable = ({ ridershipData, filters }) => {
     }
   ]
 
+  if (filters.grouping === 'day') {
+    return [
+      {
+        id: 'label',
+        name: 'Date'
+      },
+      ...dataColumns
+    ]
+  } else if (filters.grouping === 'day-of-week') {
+    return [
+      {
+        id: 'label',
+        name: 'Day of Week'
+      },
+      ...dataColumns
+    ]
+  } else if (filters.grouping === 'day-of-week-type') {
+    return [
+      {
+        id: 'label',
+        name: 'Day of Week Type'
+      },
+      ...dataColumns
+    ]
+  } else if (filters.grouping === 'time-of-day') {
+    return [
+      {
+        id: 'label',
+        name: 'Time Range'
+      },
+      ...dataColumns
+    ]
+  } else if (filters.grouping === 'stop') {
+    return [
+      {
+        id: 'label',
+        name: 'Stop Name'
+      },
+      {
+        id: 'stop_id',
+        name: 'Stop ID'
+      },
+      ...dataColumns
+    ]
+  }
+}
+
+const ResultsTable = ({ ridershipData, filters }) => {
+  if (!ridershipData || ridershipData.length === 0 || !filters) {
+    return null
+  }
+
+  const columns = getColumns(filters)
   const startDateFormatted = DateTime.fromJSDate(filters.dateRange[0]).toISODate()
   const endDateFormatted = DateTime.fromJSDate(filters.dateRange[1]).toISODate()
   const filename = `ridership_data_${startDateFormatted}_to_${endDateFormatted}.csv`
