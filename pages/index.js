@@ -13,15 +13,28 @@ export default function Home() {
   const [ridershipData, setRidershipData] = useState()
   const [loading, setLoading] = useState(false)
 
+  const validationError = message => {
+    alert(message)
+    setLoading(false)
+  }
+
   const visualize = async (filters) => {
     setRidershipData()
     setLoading(true)
 
     // Validation
     if (filters.dateRange[0] === null || filters.dateRange[1] === null) {
-      alert('Date range is required')
-      setLoading(false)
-      return
+      return validationError('Date range is required')
+    }
+
+    if (filters.grouping === 'stop') {
+      if (filters.routeId === 'all') {
+        return validationError('You must choose a specific route to analyze by stop')
+      }
+
+      if (filters.directionId === 'all') {
+        return validationError('You must choose a specific direction to analyze by stop')
+      }
     }
 
     try {

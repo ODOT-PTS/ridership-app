@@ -5,6 +5,7 @@ import RidershipByDay from './ridership-by-day.js'
 import RidershipByDayOfWeek from './ridership-by-day-of-week.js'
 import RidershipByDayOfWeekType from './ridership-by-day-of-week-type.js'
 import RidershipByTimeOfDay from './ridership-by-time-of-day.js'
+import RidershipByStop from './ridership-by-stop.js'
 
 const Results = ({ ridershipData, filters }) => {
   if (!ridershipData || !filters) {
@@ -56,6 +57,7 @@ const Results = ({ ridershipData, filters }) => {
       {filters.grouping === 'day-of-week' && <RidershipByDayOfWeek ridershipData={ridershipData} />}
       {filters.grouping === 'day-of-week-type' && <RidershipByDayOfWeekType ridershipData={ridershipData} />}
       {filters.grouping === 'time-of-day' && <RidershipByTimeOfDay ridershipData={ridershipData} />}
+      {filters.grouping === 'stop' && <RidershipByStop ridershipData={ridershipData} />}
       <ResultsTable ridershipData={ridershipData} filters={filters} />
     </>
   )

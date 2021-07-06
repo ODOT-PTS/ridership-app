@@ -76,6 +76,7 @@ const Filters = ({ visualize }) => {
           <option value="day-of-week">Day of week</option>
           <option value="day-of-week-type">Weekday vs Sat vs Sun</option>
           <option value="time-of-day">Time of day</option>
+          <option value="stop">Stop</option>
         </select>
       </label>
 
@@ -114,7 +115,7 @@ const Filters = ({ visualize }) => {
         </select>
       </label>}
 
-      {filters.directionId !== 'all' && <label className="block">
+      {filters.directionId !== 'all' && filters.grouping !== 'stop' && <label className="block">
         <span className="text-gray-700">Stop</span>
         <select
           className="mt-1 block w-full"
