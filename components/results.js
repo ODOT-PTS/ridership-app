@@ -23,6 +23,11 @@ const Results = ({ ridershipData, filters }) => {
       routeText = <>for <span className="highlight">Route {filters.routeName}</span></>
     }
 
+    let directionText = ''
+    if (filters.directionId !== 'all') {
+      directionText = <>in direction <span className="highlight"> {filters.directionName}</span></>
+    }
+
     let stopText = ''
     if (filters.stopId !== 'all') {
       stopText = <>for <span className="highlight">Stop {filters.stopName}</span></>
@@ -42,7 +47,7 @@ const Results = ({ ridershipData, filters }) => {
     return (
       <>
         <h2 className="inline-block text-2xl mr-2 font-bold">{title}</h2>
-        {dateRangeText} {routeText} {stopText}
+        {dateRangeText} {routeText} {directionText} {stopText}
       </>
     )
   }

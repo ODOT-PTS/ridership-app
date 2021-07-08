@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
-import { formatRouteName } from '../lib/formatters.js'
+import { formatDirectionName, formatRouteName } from '../lib/formatters.js'
 
 const Filters = ({ visualize }) => {
   const [routes, setRoutes] = useState()
@@ -48,6 +48,31 @@ const Filters = ({ visualize }) => {
     }
   }, [filters])
 
+  const getDirectionOptions = () => {
+    const route = routes.find(route => route.route_id === filters.routeId)
+
+    if (!route) {
+      return null
+    }
+
+    const directionOptions = []
+
+    if (route.directions.length > 1) {
+      directionOptions.push(<option value="all">Both</option>)
+    }
+
+    for (const direction of route.directions) {
+      directionOptions.push(
+        <option 
+          value={direction.direction_id.toString()} 
+          key={direction.direction_id}
+        >{formatDirectionName(direction)}</option>
+      )
+    }
+    
+    return directionOptions
+  }
+
   return (
     <>
       <label className="block">
@@ -62,6 +87,8 @@ const Filters = ({ visualize }) => {
               setFilters({ ...filters, dateRange: update })
             }}
             isClearable={true}
+            wrapperClassName="w-full"
+            className="w-full"
           />
         </div>
       </label>
@@ -87,7 +114,7 @@ const Filters = ({ visualize }) => {
           onChange={event => setFilters({
             ...filters,
             routeId: event.target.value,
-            routeName: event.target.value !== 'all' ? formatRouteName(routes.find(route => route.route_id === event.target.value)) : '',
+            routeName: event.target.value !== 'all' ? event.nativeEvent.target[event.nativeEvent.target.selectedIndex].text : '',
             directionId: 'all',
             stopId: 'all'
           })}
@@ -104,14 +131,13 @@ const Filters = ({ visualize }) => {
           onChange={event => setFilters({
             ...filters,
             directionId: event.target.value,
+            directionName: event.target.value !== 'all' ? event.nativeEvent.target[event.nativeEvent.target.selectedIndex].text : '',
             stopId: 'all',
             stopName: ''
           })}
           value={filters.directionId}
         >
-          <option value="all">Both</option>
-          <option value="0">0</option>
-          <option value="1">1</option>
+          {getDirectionOptions()}
         </select>
       </label>}
 
@@ -132,7 +158,7 @@ const Filters = ({ visualize }) => {
       </label>}
 
       <button
-        className="btn-blue"
+        className="btn-blue mt-3"
         onClick={() => visualize(filters)}
       >📈 Visualize</button>
     </>
