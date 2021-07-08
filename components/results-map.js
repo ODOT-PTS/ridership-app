@@ -15,22 +15,25 @@ const getBounds = stops => {
   return [southWest, northEast]
 };
 
-function sizePin(ridership, maxStopRidership) {
+function sizePin(ridership, maxStopRidershipValue) {
   const maxPinSize = 60
   const minPinSize = 4
 
-  return Math.round((ridership / maxStopRidership) * (maxPinSize - minPinSize) + minPinSize)
+  return Math.round((ridership / maxStopRidershipValue) * (maxPinSize - minPinSize) + minPinSize)
 }
 
 function Pins(props) {
   const { ridershipData, mapField, setPopupInfo } = props
-  const maxStopRidership = maxBy(ridershipData, mapField)
+  const maxStopRidershipValue = Math.max(
+    ...ridershipData.map(item => item.boardings),
+    ...ridershipData.map(item => item.alightings)
+  )
   const colorGradient = new Gradient()
   colorGradient.setGradient('#F4B543', '#E94246', '#5C1B91')
   colorGradient.setMidpoint(57)
 
   return ridershipData.map(stop => {
-    const size = sizePin(stop[mapField], maxStopRidership[mapField])
+    const size = sizePin(stop[mapField], maxStopRidershipValue)
     return (
       <Marker latitude={stop.stop_lat} longitude={stop.stop_lon} key={stop.stop_id}>
         <svg
