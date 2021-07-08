@@ -4,6 +4,8 @@ import { DateTime } from 'luxon'
 
 import styles from '../styles/Home.module.css'
 
+import { formatAgencyName } from '../lib/formatters.js'
+
 import Filters from '../components/filters.js'
 import Loading from '../components/loading.js'
 import Results from '../components/results.js'
@@ -11,7 +13,23 @@ import Results from '../components/results.js'
 export default function Home() {
   const [appliedFilters, setAppliedFilters] = useState()
   const [ridershipData, setRidershipData] = useState()
+  const [agencyName, setAgencyName] = useState()
   const [loading, setLoading] = useState(false)
+
+  useEffect(async () => {
+    try {
+      const response = await fetch('/agencies')
+  
+      if (response.ok) {
+        const data = await response.json()
+        setAgencyName(formatAgencyName(data))
+      } else {
+        throw new Error('Bad request')
+      }
+    } catch (error) {
+      console.warn(error)
+    }
+  }, [])
 
   const validationError = message => {
     alert(message)
@@ -64,7 +82,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Ridership App</title>
+        <title>{agencyName} Ridership Visualization</title>
         <meta name="description" content="Ridership App for GTFS-Ride data" />
       </Head>
 
@@ -72,7 +90,7 @@ export default function Home() {
         <div className="flex">
           <div className="self-start flex-shrink-0 grid grid-cols-1 gap-2 w-60">
             <h1 className={styles.title}>
-              Ridership Data Visualization
+              {agencyName} Ridership
             </h1>
             <Filters
               visualize={visualize}

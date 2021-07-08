@@ -4,7 +4,7 @@ import express from 'express'
 import next from 'next'
 import { openDb } from 'gtfs'
 
-import { queryStops, queryRidershipData, queryRoutesAndDirections } from './lib/api.mjs'
+import { queryAgencies, queryStops, queryRidershipData, queryRoutesAndDirections } from './lib/api.mjs'
 
 dotenv.config()
 
@@ -17,6 +17,11 @@ app.prepare().then(async () => {
   const server = express()
 
   const db = await openDb({ sqlitePath: process.env.SQLITE_PATH })
+
+  server.get('/agencies', async (req, res) => {
+    const agencies = await queryAgencies()
+    res.json(agencies)
+  })
 
   server.get('/routes', async (req, res) => {
     const routes = await queryRoutesAndDirections()
