@@ -13,7 +13,7 @@ const Filters = ({ visualize }) => {
     routeId: 'all',
     directionId: 'all',
     stopId: 'all',
-    grouping: 'day'
+    grouping: 'route'
   })
 
   useEffect(async () => {
@@ -99,6 +99,7 @@ const Filters = ({ visualize }) => {
           className="mt-1 block w-full"
           onChange={event => setFilters({ ...filters, grouping: event.target.value })}
         >
+          <option value="route">Route</option>
           <option value="day">Day</option>
           <option value="day-of-week">Day of week</option>
           <option value="day-of-week-type">Weekday vs Sat vs Sun</option>
@@ -108,7 +109,7 @@ const Filters = ({ visualize }) => {
         </select>
       </label>
 
-      <label className="block">
+      {filters.grouping !== 'route' && <label className="block">
         <span className="text-gray-700">Route</span>
         <select
           className="mt-1 block w-full"
@@ -123,9 +124,9 @@ const Filters = ({ visualize }) => {
           <option value="all">All</option>
           {routes && routes.map(route => <option key={route.route_id} value={route.route_id}>{formatRouteName(route)}</option>)}
         </select>
-      </label>
+      </label>}
 
-      {filters.routeId !== 'all' && <label className="block">
+      {filters.grouping !== 'route' && filters.routeId !== 'all' && <label className="block">
         <span className="text-gray-700">Direction</span>
         <select
           className="mt-1 block w-full"

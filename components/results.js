@@ -5,6 +5,7 @@ import ResultsTable from './results-table.js'
 import RidershipByDay from './ridership-by-day.js'
 import RidershipByDayOfWeek from './ridership-by-day-of-week.js'
 import RidershipByDayOfWeekType from './ridership-by-day-of-week-type.js'
+import RidershipByRoute from './ridership-by-route.js'
 import RidershipByTimeOfDay from './ridership-by-time-of-day.js'
 import RidershipByStop from './ridership-by-stop.js'
 
@@ -34,7 +35,9 @@ const Results = ({ ridershipData, filters }) => {
     }
 
     let title = ''
-    if (filters.grouping === 'day') {
+    if (filters.grouping === 'route') {
+      title = 'Ridership by Route'
+    } else if (filters.grouping === 'day') {
       title = 'Ridership by Day'
     } else if (filters.grouping === 'day-of-week') {
       title = 'Ridership by Day of Week'
@@ -42,6 +45,10 @@ const Results = ({ ridershipData, filters }) => {
       title = 'Ridership by Weekday vs Weekend'
     } else if (filters.grouping === 'time-of-day') {
       title = 'Ridership by Time of Day'
+    } else if (filters.grouping === 'stop') {
+      title = 'Ridership by Stop'
+    } else if (filters.grouping === 'none') {
+      title = 'Ridership'
     }
 
     return (
@@ -59,6 +66,7 @@ const Results = ({ ridershipData, filters }) => {
         <div className="text-8xl">⚠️</div>
         <div className="font-bold text-2xl">No data</div>
       </div>}
+      {filters.grouping === 'route' && <RidershipByRoute ridershipData={ridershipData} />}
       {filters.grouping === 'day' && <RidershipByDay ridershipData={ridershipData} startDate={startDate} endDate={endDate} />}
       {filters.grouping === 'day-of-week' && <RidershipByDayOfWeek ridershipData={ridershipData} />}
       {filters.grouping === 'day-of-week-type' && <RidershipByDayOfWeekType ridershipData={ridershipData} />}

@@ -19,7 +19,15 @@ const getColumns = filters => {
     }
   ]
 
-  if (filters.grouping === 'day') {
+  if (filters.grouping === 'route') {
+    return [
+      {
+        id: 'label',
+        name: 'Route'
+      },
+      ...dataColumns
+    ]
+  } else if (filters.grouping === 'day') {
     return [
       {
         id: 'label',
