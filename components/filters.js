@@ -97,7 +97,19 @@ const Filters = ({ visualize }) => {
         <span className="text-gray-700">Group By</span>
         <select
           className="mt-1 block w-full"
-          onChange={event => setFilters({ ...filters, grouping: event.target.value })}
+          onChange={event => {
+            const newFilters = { ...filters, grouping: event.target.value }
+
+            if (event.target.value === 'route') {
+              newFilters.routeId = 'all'
+              newFilters.directionId = 'all'
+              newFilters.stopId = 'all'
+            } else if (event.target.value === 'stop') {
+              newFilters.stopId = 'all'
+            }
+  
+            setFilters(newFilters)
+          }}
         >
           <option value="route">Route</option>
           <option value="day">Day</option>
