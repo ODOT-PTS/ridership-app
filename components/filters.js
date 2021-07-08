@@ -58,7 +58,7 @@ const Filters = ({ visualize }) => {
     const directionOptions = []
 
     if (route.directions.length > 1) {
-      directionOptions.push(<option value="all">Both</option>)
+      directionOptions.push(<option value="all" key="all">Both</option>)
     }
 
     for (const direction of route.directions) {
