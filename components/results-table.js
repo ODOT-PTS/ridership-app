@@ -63,6 +63,89 @@ const getColumns = filters => {
       },
       ...dataColumns
     ]
+  } else if (filters.grouping === 'none') {
+    return [
+      {
+        id: 'trip_id',
+        name: 'Trip ID'
+      },
+      {
+        id: 'stop_id',
+        name: 'Stop ID'
+      },
+      {
+        id: 'stop_sequence',
+        name: 'Stop Sequence'
+      },
+      {
+        id: 'record_use',
+        name: 'Record Use'
+      },
+      {
+        id: 'schedule_relationship',
+        name: 'Schedule Relationship'
+      },
+      {
+        id: 'boardings',
+        name: 'Boardings'
+      },
+      {
+        id: 'alightings',
+        name: 'Alightings'
+      },
+      {
+        id: 'current_load',
+        name: 'Current Load'
+      },
+      {
+        id: 'load_count',
+        name: 'Load Count'
+      },
+      {
+        id: 'load_type',
+        name: 'Load Type'
+      },
+      {
+        id: 'rack_down',
+        name: 'Rack Down'
+      },
+      {
+        id: 'bike_boardings',
+        name: 'Bike Boardings'
+      },
+      {
+        id: 'bike_alightings',
+        name: 'Bike Alightings'
+      },
+      {
+        id: 'ramp_used',
+        name: 'Ramp Used'
+      },
+      {
+        id: 'ramp_boardings',
+        name: 'Ramp Boadings'
+      },
+      {
+        id: 'ramp_alightings',
+        name: 'Ramp Alightings'
+      },
+      {
+        id: 'service_date',
+        name: 'Service Date'
+      },
+      {
+        id: 'service_arrival_time',
+        name: 'Service Arrival Time'
+      },
+      {
+        id: 'service_departure_time',
+        name: 'Service Departure Time'
+      },
+      {
+        id: 'source',
+        name: 'Source'
+      },
+    ]
   }
 }
 
