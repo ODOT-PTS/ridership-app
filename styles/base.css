@@ -5,3 +5,16 @@
 .highlight {
   @apply bg-yellow-200 text-black font-bold px-1 py-1;
 }
+
+.hover\:w-full:hover {
+  width: 100%;
+}
+.group:hover .group-hover\:w-full {
+  width: 100%;
+}
+.group:hover .group-hover\:inline-block {
+  display: inline-block;
+}
+.group:hover .group-hover\:flex-grow {
+  flex-grow: 1;
+}
