@@ -78,7 +78,7 @@ const ResultsTable = ({ ridershipData, filters }) => {
 
   return (
     <>
-      <div className="mt-5">
+      <div className="mt-10">
         <Grid
           columns={columns}
           data={ridershipData}

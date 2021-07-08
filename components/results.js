@@ -59,7 +59,7 @@ const Results = ({ ridershipData, filters }) => {
       {filters.grouping === 'day-of-week-type' && <RidershipByDayOfWeekType ridershipData={ridershipData} />}
       {filters.grouping === 'time-of-day' && <RidershipByTimeOfDay ridershipData={ridershipData} />}
       {filters.grouping === 'stop' && <RidershipByStop ridershipData={ridershipData} />}
-      <ResultsMap ridershipData={ridershipData} filters={filters} />
+      {filters.grouping === 'stop' && <ResultsMap ridershipData={ridershipData} filters={filters} />}
       <ResultsTable ridershipData={ridershipData} filters={filters} />
     </>
   )
