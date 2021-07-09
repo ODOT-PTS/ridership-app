@@ -1,5 +1,6 @@
 import DatePicker from 'react-datepicker'
 import { useState, useEffect } from 'react'
+import { DateTime } from 'luxon'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -9,7 +10,7 @@ const Filters = ({ visualize }) => {
   const [routes, setRoutes] = useState()
   const [stops, setStops] = useState()
   const [filters, setFilters] = useState({
-    dateRange: [null, null],
+    dateRange: [DateTime.now().minus({ months: 3 }).toJSDate(), DateTime.now().minus({ days: 1 }).toJSDate()],
     routeId: 'all',
     directionId: 'all',
     stopId: 'all',
