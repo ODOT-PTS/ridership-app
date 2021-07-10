@@ -114,6 +114,7 @@ const ResultsMap= ({ ridershipData, filters }) => {
         width="100%"
         onViewportChange={nextViewport => setViewport(nextViewport)}
         mapboxApiAccessToken={process.env.NEXT_PUBLIC_REACT_APP_MAPBOX_ACCESS_TOKEN}
+        scrollZoom={false}
       >
         <NavigationControl style={{ right: 10, top: 10 }} />
 
