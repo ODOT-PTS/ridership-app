@@ -21,6 +21,26 @@ const getColumns = filters => {
       id: 'load_count',
       name: 'Load Count',
       formatter: formatNumber
+    },
+    {
+      id: 'bike_boardings',
+      name: 'Bike Boardings',
+      formatter: formatNumber
+    },
+    {
+      id: 'bike_alightings',
+      name: 'Bike Alightings',
+      formatter: formatNumber
+    },
+    {
+      id: 'ramp_boardings',
+      name: 'Ramp Boardings',
+      formatter: formatNumber
+    },
+    {
+      id: 'ramp_alightings',
+      name: 'Ramp Alightings',
+      formatter: formatNumber
     }
   ]
 
@@ -162,7 +182,7 @@ const getColumns = filters => {
       },
       {
         id: 'ramp_boardings',
-        name: 'Ramp Boadings',
+        name: 'Ramp Boardings',
         formatter: formatNumber
       },
       {

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { DateTime } from 'luxon'
 
 import ResultsMap from './results-map.js'
@@ -9,12 +10,14 @@ import RidershipByRoute from './ridership-by-route.js'
 import RidershipByTimeOfDay from './ridership-by-time-of-day.js'
 import RidershipByTrip from './ridership-by-trip.js'
 import RidershipByStop from './ridership-by-stop.js'
+import ToggleMenu from './toggle-menu.js'
 
 const Results = ({ ridershipData, filters }) => {
   if (!ridershipData || !filters) {
     return null
   }
 
+  const [type, setType] = useState('passengers')
   const [startDate, endDate] = filters.dateRange
 
   const formatChartTitle = () => {
@@ -69,14 +72,32 @@ const Results = ({ ridershipData, filters }) => {
         <div className="text-8xl">⚠️</div>
         <div className="font-bold text-2xl">No data</div>
       </div>}
-      {filters.grouping === 'route' && <RidershipByRoute ridershipData={ridershipData} />}
-      {filters.grouping === 'day' && <RidershipByDay ridershipData={ridershipData} startDate={startDate} endDate={endDate} />}
-      {filters.grouping === 'day-of-week' && <RidershipByDayOfWeek ridershipData={ridershipData} />}
-      {filters.grouping === 'day-of-week-type' && <RidershipByDayOfWeekType ridershipData={ridershipData} />}
-      {filters.grouping === 'time-of-day' && <RidershipByTimeOfDay ridershipData={ridershipData} />}
-      {filters.grouping === 'trip' && <RidershipByTrip ridershipData={ridershipData} />}
-      {filters.grouping === 'stop' && <RidershipByStop ridershipData={ridershipData} />}
-      {filters.grouping === 'stop' && <ResultsMap ridershipData={ridershipData} filters={filters} />}
+      {filters.grouping !== 'none' && <ToggleMenu
+        fieldOptions={[
+          {
+            value: 'passengers',
+            label: 'Passengers'
+          },
+          {
+            value: 'bikes',
+            label: 'Bikes'
+          },
+          {
+            value: 'ramp',
+            label: 'Ramp Boardings'
+          }
+        ]}
+        field={type}
+        setField={setType}
+      />}
+      {filters.grouping === 'route' && <RidershipByRoute ridershipData={ridershipData} type={type} />}
+      {filters.grouping === 'day' && <RidershipByDay ridershipData={ridershipData} type={type} />}
+      {filters.grouping === 'day-of-week' && <RidershipByDayOfWeek ridershipData={ridershipData} type={type} />}
+      {filters.grouping === 'day-of-week-type' && <RidershipByDayOfWeekType ridershipData={ridershipData} type={type} />}
+      {filters.grouping === 'time-of-day' && <RidershipByTimeOfDay ridershipData={ridershipData} type={type} />}
+      {filters.grouping === 'trip' && <RidershipByTrip ridershipData={ridershipData} type={type} />}
+      {filters.grouping === 'stop' && <RidershipByStop ridershipData={ridershipData} type={type} />}
+      {filters.grouping === 'stop' && <ResultsMap ridershipData={ridershipData} type={type} />}
       <ResultsTable ridershipData={ridershipData} filters={filters} />
     </>
   )

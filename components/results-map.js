@@ -2,9 +2,12 @@ import { useState, useMemo } from 'react'
 import ReactMapGL, { Marker, NavigationControl, Popup } from 'react-map-gl';
 import WebMercatorViewport from 'viewport-mercator-project'
 import { compact, maxBy, minBy, startCase } from 'lodash'
-import Gradient from "javascript-color-gradient"
+import Gradient from 'javascript-color-gradient'
+
+import ToggleMenu from './toggle-menu.js'
 
 import { formatNumber } from '../lib/formatters.js'
+import { getAlightingFieldName, getBoardingFieldName } from '../lib/utils.js';
 
 const getBounds = stops => {
   const maxLat = maxBy(stops, 'stop_lat').stop_lat
@@ -17,25 +20,27 @@ const getBounds = stops => {
   return [southWest, northEast]
 }
 
-function sizePin(ridership, maxStopRidershipValue) {
+function sizePin(value, maxValue) {
   const maxPinSize = 60
   const minPinSize = 4
 
-  return Math.round(((ridership || 0) / maxStopRidershipValue) * (maxPinSize - minPinSize) + minPinSize)
+  return Math.round(((value || 0) / maxValue) * (maxPinSize - minPinSize) + minPinSize)
 }
 
-function Pins(props) {
-  const { ridershipData, mapField, setPopupInfo } = props
-  const maxStopRidershipValue = Math.max(
-    ...compact(ridershipData.map(item => item.boardings)),
-    ...compact(ridershipData.map(item => item.alightings))
+function Pins({ ridershipData, setPopupInfo, boardingsOrAlightings, type }) {
+  const boardingFieldName = getBoardingFieldName(type)
+  const alightingFieldName = getAlightingFieldName(type)
+  const fieldName = boardingsOrAlightings === 'boardings' ? boardingFieldName : alightingFieldName
+  const maxValue = Math.max(
+    ...compact(ridershipData.map(item => item[boardingFieldName])),
+    ...compact(ridershipData.map(item => item[alightingFieldName]))
   )
   const colorGradient = new Gradient()
   colorGradient.setGradient('#F4B543', '#E94246', '#5C1B91')
   colorGradient.setMidpoint(57)
 
   return ridershipData.map(stop => {
-    const size = sizePin(stop[mapField], maxStopRidershipValue)
+    const size = sizePin(stop[fieldName], maxValue)
     return (
       <Marker latitude={stop.stop_lat} longitude={stop.stop_lon} key={stop.stop_id}>
         <svg
@@ -98,8 +103,8 @@ const MapPopup = ({ popupInfo, setPopupInfo }) => {
   )
 }
 
-const ResultsMap = ({ ridershipData, filters }) => {
-  if (!ridershipData || ridershipData.length === 0 || !filters) {
+const ResultsMap = ({ ridershipData, type }) => {
+  if (!ridershipData || ridershipData.length === 0) {
     return null
   }
 
@@ -112,44 +117,29 @@ const ResultsMap = ({ ridershipData, filters }) => {
 
   const [viewport, setViewport] = useState(bounds)
   const [popupInfo, setPopupInfo] = useState(null)
-  const [mapField, setMapField] = useState('boardings')
+  const [boardingsOrAlightings, setBoardingsOrAlightings] = useState('boardings')
 
-  const pins = useMemo(() => <Pins ridershipData={ridershipData} setPopupInfo={setPopupInfo} mapField={mapField} />, [ridershipData, mapField])
+  const pins = useMemo(
+    () => <Pins ridershipData={ridershipData} setPopupInfo={setPopupInfo} type={type} boardingsOrAlightings={boardingsOrAlightings} />,
+    [ridershipData, boardingsOrAlightings, type]
+  )
 
   return (
     <div className="mt-8">
-      <div className="flex justify-start pb-2">
-        <div className="group">
-          <a
-            href="#"
-            className={`flex items-end justify-center text-center mx-auto px-4 pt-2 w-full`}
-            onClick={event => {
-              event.preventDefault()
-              setMapField('boardings')
-            }}
-          >
-            <span className={`block px-1 pt-1 pb-1 text-gray-400 group-hover:text-blue-500 ${mapField === 'boardings' && 'text-gray-800'}`}>
-                <span className="block text-xs pb-2">Boardings</span>
-                {mapField === 'boardings' && <span className="block w-5 mx-auto h-1 bg-gray-800 group-hover:bg-blue-500 rounded-full"></span>}
-            </span>
-          </a>
-        </div>
-        <div className="group">
-          <a
-            href="#"
-            className="flex items-end justify-center text-center mx-auto px-4 pt-2 w-full"
-            onClick={event => {
-              event.preventDefault()
-              setMapField('alightings')
-            }}
-          >
-            <span className={`block px-1 pt-1 pb-1 text-gray-400 group-hover:text-blue-500 ${mapField === 'alightings' && 'text-gray-800'}`}>
-                <span className="block text-xs pb-2">Alightings</span>
-                {mapField === 'alightings' && <span className="block w-5 mx-auto h-1 bg-gray-800 group-hover:bg-blue-500 rounded-full"></span>}
-            </span>
-          </a>
-        </div>
-      </div>
+      <ToggleMenu
+        fieldOptions={[
+          {
+            value: 'boardings',
+            label: 'Boardings'
+          },
+          {
+            value: 'alightings',
+            label: 'Alightings'
+          }
+        ]}
+        field={boardingsOrAlightings}
+        setField={setBoardingsOrAlightings}
+      />
       <ReactMapGL
         {...viewport}
         width="100%"

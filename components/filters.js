@@ -109,9 +109,7 @@ const Filters = ({ visualize }) => {
             selectsRange={true}
             startDate={filters.dateRange[0]}
             endDate={filters.dateRange[1]}
-            onChange={(update) => {
-              setFilters({ ...filters, dateRange: update })
-            }}
+            onChange={(update) => setFilters({ ...filters, dateRange: update })}
             isClearable={true}
             wrapperClassName="w-full"
             className="w-full"
