@@ -4,7 +4,7 @@ import express from 'express'
 import next from 'next'
 import { openDb } from 'gtfs'
 
-import { queryAgencies, queryStops, queryRidershipData, queryRoutesAndDirections } from './lib/api.mjs'
+import { queryAgencies, queryStops, queryRidershipData, queryRidershipDateRange, queryRoutesAndDirections } from './lib/api.mjs'
 
 dotenv.config()
 
@@ -26,6 +26,11 @@ app.prepare().then(async () => {
   server.get('/routes', async (req, res) => {
     const routes = await queryRoutesAndDirections()
     res.json(routes)
+  })
+
+  server.get('/boardalight-date-range', async (req, res) => {
+    const dateRange = await queryRidershipDateRange()
+    res.json(dateRange)
   })
 
   server.get('/stops', async (req, res) => {

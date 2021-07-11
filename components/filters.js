@@ -18,12 +18,37 @@ const Filters = ({ visualize }) => {
   })
 
   useEffect(async () => {
+    // Get a list of all routes with at least one trip
     try {
       const response = await fetch('/routes')
   
       if (response.ok) {
         const data = await response.json()
         setRoutes(data)
+      } else {
+        throw new Error('Bad request')
+      }
+    } catch (error) {
+      console.warn(error)
+    }
+
+    // Get the max date range for board/alight data
+    try {
+      const response = await fetch('/boardalight-date-range')
+  
+      if (response.ok) {
+        const data = await response.json()
+        if (!data) {
+          return
+        }
+
+        setFilters({
+          ...filters,
+          dateRange: [
+            DateTime.fromFormat(data.start_date.toString(), 'yyyyMMdd').toJSDate(),
+            DateTime.fromFormat(data.end_date.toString(), 'yyyyMMdd').toJSDate()
+          ]
+        })
       } else {
         throw new Error('Bad request')
       }
