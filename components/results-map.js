@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react'
 import ReactMapGL, { Marker, NavigationControl, Popup } from 'react-map-gl';
 import WebMercatorViewport from 'viewport-mercator-project'
 import { maxBy, minBy } from 'lodash'
@@ -13,7 +13,7 @@ const getBounds = stops => {
   const southWest = [minLng, minLat]
   const northEast = [maxLng, maxLat]
   return [southWest, northEast]
-};
+}
 
 function sizePin(ridership, maxStopRidershipValue) {
   const maxPinSize = 60

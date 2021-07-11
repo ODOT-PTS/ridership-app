@@ -45,16 +45,6 @@ export default function Home() {
       return validationError('Date range is required')
     }
 
-    if (filters.grouping === 'stop') {
-      if (filters.routeId === 'all') {
-        return validationError('You must choose a specific route to analyze by stop')
-      }
-
-      if (filters.directionId === 'all') {
-        return validationError('You must choose a specific direction to analyze by stop')
-      }
-    }
-
     try {
       const parameters = {
         start_date: DateTime.fromJSDate(filters.dateRange[0]).toISODate(),
@@ -63,7 +53,7 @@ export default function Home() {
         direction_id: filters.directionId,
         stop_id: filters.stopId,
         grouping: filters.grouping
-      };
+      }
 
       const response = await fetch('/ridership-data?' + new URLSearchParams(parameters))
 
