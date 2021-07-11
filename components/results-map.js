@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import ReactMapGL, { Marker, NavigationControl, Popup } from 'react-map-gl';
 import WebMercatorViewport from 'viewport-mercator-project'
-import { maxBy, minBy } from 'lodash'
+import { compact, maxBy, minBy, startCase } from 'lodash'
 import Gradient from "javascript-color-gradient"
 
 import { formatNumber } from '../lib/formatters.js'
@@ -21,14 +21,14 @@ function sizePin(ridership, maxStopRidershipValue) {
   const maxPinSize = 60
   const minPinSize = 4
 
-  return Math.round((ridership / maxStopRidershipValue) * (maxPinSize - minPinSize) + minPinSize)
+  return Math.round(((ridership || 0) / maxStopRidershipValue) * (maxPinSize - minPinSize) + minPinSize)
 }
 
 function Pins(props) {
   const { ridershipData, mapField, setPopupInfo } = props
   const maxStopRidershipValue = Math.max(
-    ...ridershipData.map(item => item.boardings),
-    ...ridershipData.map(item => item.alightings)
+    ...compact(ridershipData.map(item => item.boardings)),
+    ...compact(ridershipData.map(item => item.alightings))
   )
   const colorGradient = new Gradient()
   colorGradient.setGradient('#F4B543', '#E94246', '#5C1B91')
@@ -59,7 +59,46 @@ function Pins(props) {
   })
 }
 
-const ResultsMap= ({ ridershipData, filters }) => {
+const MapPopup = ({ popupInfo, setPopupInfo }) => {
+  if (!popupInfo) {
+    return null
+  }
+  
+  return (
+    <Popup
+      tipSize={10}
+      longitude={popupInfo.stop_lon}
+      latitude={popupInfo.stop_lat}
+      closeOnClick={false}
+      onClose={setPopupInfo}
+      offsetLeft={popupInfo.size / 2}
+      offsetTop={popupInfo.size / 2}
+    >
+      <div className="px-3">
+        <div className="font-bold">{popupInfo.label}</div>
+        {[
+          'boardings',
+          'alightings',
+          'load_count',
+          'bike_boardings',
+          'bike_alightings',
+          'ramp_boardings',
+          'ramp_alightings'
+        ].map(field => {
+          if (popupInfo[field] === null || popupInfo[field] === undefined) {
+            return null
+          }
+
+          return (
+            <div key={field}>{startCase(field)}: {formatNumber(popupInfo[field])}</div>
+          )
+        })}
+      </div>
+    </Popup>
+  )
+}
+
+const ResultsMap = ({ ridershipData, filters }) => {
   if (!ridershipData || ridershipData.length === 0 || !filters) {
     return null
   }
@@ -122,23 +161,7 @@ const ResultsMap= ({ ridershipData, filters }) => {
 
         {pins}
 
-        {popupInfo && (
-          <Popup
-            tipSize={10}
-            longitude={popupInfo.stop_lon}
-            latitude={popupInfo.stop_lat}
-            closeOnClick={false}
-            onClose={setPopupInfo}
-            offsetLeft={popupInfo.size / 2}
-            offsetTop={popupInfo.size / 2}
-          >
-            <div className="px-3">
-              <div className="font-bold">{popupInfo.label}</div>
-              <div>Boardings: {formatNumber(popupInfo.boardings)}</div>
-              <div>Alightings: {formatNumber(popupInfo.alightings)}</div>
-            </div>
-          </Popup>
-        )}
+        <MapPopup popupInfo={popupInfo} setPopupInfo={setPopupInfo} />
       </ReactMapGL>
     </div>
   )
