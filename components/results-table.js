@@ -79,6 +79,18 @@ const getColumns = filters => {
   } else if (filters.grouping === 'none') {
     return [
       {
+        id: 'service_date',
+        name: 'Service Date'
+      },
+      {
+        id: 'service_departure_time',
+        name: 'Service Departure Time'
+      },
+      {
+        id: 'service_arrival_time',
+        name: 'Service Arrival Time'
+      },
+      {
         id: 'trip_id',
         name: 'Trip ID'
       },
@@ -151,21 +163,9 @@ const getColumns = filters => {
         formatter: formatNumber
       },
       {
-        id: 'service_date',
-        name: 'Service Date'
-      },
-      {
-        id: 'service_arrival_time',
-        name: 'Service Arrival Time'
-      },
-      {
-        id: 'service_departure_time',
-        name: 'Service Departure Time'
-      },
-      {
         id: 'source',
         name: 'Source'
-      },
+      }
     ]
   }
 }
