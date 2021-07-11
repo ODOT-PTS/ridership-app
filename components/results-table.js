@@ -64,6 +64,14 @@ const getColumns = filters => {
       },
       ...dataColumns
     ]
+  }  else if (filters.grouping === 'trip') {
+    return [
+      {
+        id: 'label',
+        name: 'Trip'
+      },
+      ...dataColumns
+    ]
   } else if (filters.grouping === 'stop') {
     return [
       {

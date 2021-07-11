@@ -142,6 +142,7 @@ const Filters = ({ visualize }) => {
           <option value="day-of-week">Day of week</option>
           <option value="day-of-week-type">Weekday vs Sat vs Sun</option>
           <option value="time-of-day">Time of day</option>
+          <option value="trip">Trip</option>
           <option value="stop">Stop</option>
           <option value="none">None</option>
         </select>
