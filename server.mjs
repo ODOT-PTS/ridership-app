@@ -19,18 +19,33 @@ app.prepare().then(async () => {
   const db = await openDb({ sqlitePath: process.env.SQLITE_PATH })
 
   server.get('/agencies', async (req, res) => {
-    const agencies = await queryAgencies()
-    res.json(agencies)
+    try {
+      const agencies = await queryAgencies()
+      res.json(agencies)
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ error: true })
+    }
   })
 
   server.get('/routes', async (req, res) => {
-    const routes = await queryRoutesAndDirections()
-    res.json(routes)
+    try {
+      const routes = await queryRoutesAndDirections()
+      res.json(routes)
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ error: true })
+    }
   })
 
   server.get('/boardalight-date-range', async (req, res) => {
-    const dateRange = await queryRidershipDateRange()
-    res.json(dateRange)
+    try {
+      const dateRange = await queryRidershipDateRange()
+      res.json(dateRange)
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ error: true })
+    }
   })
 
   server.get('/stops', async (req, res) => {
@@ -44,8 +59,13 @@ app.prepare().then(async () => {
   })
 
   server.get('/ridership-data', async (req, res) => {
-    const ridershipData = await queryRidershipData(req.query)
-    res.json(ridershipData)
+    try {
+      const ridershipData = await queryRidershipData(req.query)
+      res.json(ridershipData)
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ error: true })
+    }
   })
 
   server.all('*', (req, res) => {
