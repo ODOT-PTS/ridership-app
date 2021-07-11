@@ -4,6 +4,8 @@ import WebMercatorViewport from 'viewport-mercator-project'
 import { maxBy, minBy } from 'lodash'
 import Gradient from "javascript-color-gradient"
 
+import { formatNumber } from '../lib/formatters.js'
+
 const getBounds = stops => {
   const maxLat = maxBy(stops, 'stop_lat').stop_lat
   const minLat = minBy(stops, 'stop_lat').stop_lat
@@ -132,8 +134,8 @@ const ResultsMap= ({ ridershipData, filters }) => {
           >
             <div className="px-3">
               <div className="font-bold">{popupInfo.label}</div>
-              <div>Boardings: {popupInfo.boardings}</div>
-              <div>Alightings: {popupInfo.alightings}</div>
+              <div>Boardings: {formatNumber(popupInfo.boardings)}</div>
+              <div>Alightings: {formatNumber(popupInfo.alightings)}</div>
             </div>
           </Popup>
         )}
