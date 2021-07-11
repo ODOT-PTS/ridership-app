@@ -3,19 +3,24 @@ import { Grid, _ } from 'gridjs-react'
 import 'gridjs/dist/theme/mermaid.css'
 import { DateTime } from 'luxon'
 
+import { formatNumber } from '../lib/formatters.js'
+
 const getColumns = filters => {
   const dataColumns = [
     {
       id: 'boardings',
-      name: 'Boardings'
+      name: 'Boardings',
+      formatter: formatNumber
     },
     {
       id: 'alightings',
-      name: 'Alightings'
+      name: 'Alightings',
+      formatter: formatNumber
     },
     {
       id: 'load_count',
-      name: 'Load Count'
+      name: 'Load Count',
+      formatter: formatNumber
     }
   ]
 
@@ -95,19 +100,23 @@ const getColumns = filters => {
       },
       {
         id: 'boardings',
-        name: 'Boardings'
+        name: 'Boardings',
+        formatter: formatNumber
       },
       {
         id: 'alightings',
-        name: 'Alightings'
+        name: 'Alightings',
+        formatter: formatNumber
       },
       {
         id: 'current_load',
-        name: 'Current Load'
+        name: 'Current Load',
+        formatter: formatNumber
       },
       {
         id: 'load_count',
-        name: 'Load Count'
+        name: 'Load Count',
+        formatter: formatNumber
       },
       {
         id: 'load_type',
@@ -119,11 +128,13 @@ const getColumns = filters => {
       },
       {
         id: 'bike_boardings',
-        name: 'Bike Boardings'
+        name: 'Bike Boardings',
+        formatter: formatNumber
       },
       {
         id: 'bike_alightings',
-        name: 'Bike Alightings'
+        name: 'Bike Alightings',
+        formatter: formatNumber
       },
       {
         id: 'ramp_used',
@@ -131,11 +142,13 @@ const getColumns = filters => {
       },
       {
         id: 'ramp_boardings',
-        name: 'Ramp Boadings'
+        name: 'Ramp Boadings',
+        formatter: formatNumber
       },
       {
         id: 'ramp_alightings',
-        name: 'Ramp Alightings'
+        name: 'Ramp Alightings',
+        formatter: formatNumber
       },
       {
         id: 'service_date',
