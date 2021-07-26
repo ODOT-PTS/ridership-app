@@ -3,7 +3,7 @@ const ToggleMenu = ({ fieldOptions, field, setField }) => {
     <div className="flex justify-start pb-2">
       {fieldOptions.map(fieldOption => {
         return (
-          <div className="group">
+          <div className="group" key={fieldOption.value}>
             <a
               href="#"
               className={`flex items-end justify-center text-center mx-auto px-4 pt-2 w-full`}
