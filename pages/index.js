@@ -31,6 +31,7 @@ export default function Home() {
         console.warn(error)
       }
     }
+    fetchAgencies()
   }, [])
 
   const validationError = message => {
