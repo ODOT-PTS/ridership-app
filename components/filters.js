@@ -14,7 +14,8 @@ const Filters = ({ visualize }) => {
     routeId: 'all',
     directionId: 'all',
     stopId: 'all',
-    grouping: 'route'
+    grouping: 'route',
+    timeBucketSize: '60',
   })
 
   useEffect(async () => {
@@ -145,6 +146,25 @@ const Filters = ({ visualize }) => {
           <option value="none">None</option>
         </select>
       </label>
+
+      {filters.grouping === 'time-of-day' && <label className="block">
+        <span className="text-gray-700">Time Bucket Size</span>
+        <select
+          className="mt-1 block w-full"
+          onChange={event => setFilters({
+            ...filters,
+            timeBucketSize: event.target.value
+          })}
+          value={filters.timeBucketSize}
+        >
+          <option value="120">2 hours</option>
+          <option value="60">1 hour</option>
+          <option value="30">30 minutes</option>
+          <option value="15">15 minutes</option>
+          <option value="10">10 minutes</option>
+          <option value="5">5 minutes</option>
+        </select>
+      </label>}
 
       {filters.grouping !== 'route' && <label className="block">
         <span className="text-gray-700">Route</span>

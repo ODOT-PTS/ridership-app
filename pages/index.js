@@ -52,7 +52,8 @@ export default function Home() {
         route_id: filters.routeId,
         direction_id: filters.directionId,
         stop_id: filters.stopId,
-        grouping: filters.grouping
+        grouping: filters.grouping,
+        time_bucket_size: filters.timeBucketSize,
       }
 
       const response = await fetch('/ridership-data?' + new URLSearchParams(parameters))
