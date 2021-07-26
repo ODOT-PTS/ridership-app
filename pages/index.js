@@ -16,18 +16,20 @@ export default function Home() {
   const [agencyName, setAgencyName] = useState()
   const [loading, setLoading] = useState(false)
 
-  useEffect(async () => {
-    try {
-      const response = await fetch('/agencies')
-  
-      if (response.ok) {
-        const data = await response.json()
-        setAgencyName(formatAgencyName(data))
-      } else {
-        throw new Error('Bad request')
+  useEffect(() => {
+    const fetchAgencies = async () => {
+      try {
+        const response = await fetch('/agencies')
+    
+        if (response.ok) {
+          const data = await response.json()
+          setAgencyName(formatAgencyName(data))
+        } else {
+          throw new Error('Bad request')
+        }
+      } catch (error) {
+        console.warn(error)
       }
-    } catch (error) {
-      console.warn(error)
     }
   }, [])
 

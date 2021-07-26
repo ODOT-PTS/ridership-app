@@ -13,12 +13,7 @@ import RidershipByStop from './ridership-by-stop.js'
 import ToggleMenu from './toggle-menu.js'
 
 const Results = ({ ridershipData, filters }) => {
-  if (!ridershipData || !filters) {
-    return null
-  }
-
   const [type, setType] = useState('passengers')
-  const [startDate, endDate] = filters.dateRange
 
   const formatChartTitle = () => {
     const dateRangeText =<><span className="highlight">{DateTime.fromJSDate(startDate).toISODate()}</span> to <span className="highlight">{DateTime.fromJSDate(endDate).toISODate()}</span></>
@@ -64,6 +59,12 @@ const Results = ({ ridershipData, filters }) => {
       </>
     )
   }
+
+  if (!ridershipData || !filters) {
+    return null
+  }
+
+  const [startDate, endDate] = filters.dateRange
 
   return (
     <>

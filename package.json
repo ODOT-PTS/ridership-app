@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "node server.mjs",
     "build": "next build",
-    "start": "NODE_ENV=production node server.mjs"
+    "start": "NODE_ENV=production node server.mjs",
+    "lint": "next lint"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.3.3",
@@ -33,6 +34,8 @@
   "devDependencies": {
     "@types/react": "^17.0.13",
     "autoprefixer": "^10.2.6",
+    "eslint": "^7.31.0",
+    "eslint-config-next": "^11.0.1",
     "postcss": "^8.3.5",
     "tailwindcss": "^2.2.4"
   }

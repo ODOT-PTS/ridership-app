@@ -10,6 +10,10 @@ import { formatNumber } from '../lib/formatters.js'
 import { getAlightingFieldName, getBoardingFieldName } from '../lib/utils.js';
 
 const getBounds = stops => {
+  if (!stops) {
+    return []
+  }
+
   const maxLat = maxBy(stops, 'stop_lat').stop_lat
   const minLat = minBy(stops, 'stop_lat').stop_lat
   const maxLng = maxBy(stops, 'stop_lon').stop_lon
@@ -104,15 +108,11 @@ const MapPopup = ({ popupInfo, setPopupInfo }) => {
 }
 
 const ResultsMap = ({ ridershipData, type }) => {
-  if (!ridershipData || ridershipData.length === 0) {
-    return null
-  }
-
   // Calculate bounds of all stops
   const webViewport = new WebMercatorViewport({ width: 600, height: 400 })
   const bounds = webViewport.fitBounds(
     getBounds(ridershipData),
-    { padding: 20 }
+    { padding: 40 }
   )
 
   const [viewport, setViewport] = useState(bounds)
@@ -123,6 +123,10 @@ const ResultsMap = ({ ridershipData, type }) => {
     () => <Pins ridershipData={ridershipData} setPopupInfo={setPopupInfo} type={type} boardingsOrAlightings={boardingsOrAlightings} />,
     [ridershipData, boardingsOrAlightings, type]
   )
+
+  if (!ridershipData || ridershipData.length === 0) {
+    return null
+  }
 
   return (
     <div className="mt-8">

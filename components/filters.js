@@ -18,48 +18,55 @@ const Filters = ({ visualize }) => {
     timeBucketSize: '60',
   })
 
-  useEffect(async () => {
-    // Get a list of all routes with at least one trip
-    try {
-      const response = await fetch('/routes')
-  
-      if (response.ok) {
-        const data = await response.json()
-        setRoutes(data)
-      } else {
-        throw new Error('Bad request')
-      }
-    } catch (error) {
-      console.warn(error)
-    }
-
-    // Get the max date range for board/alight data
-    try {
-      const response = await fetch('/boardalight-date-range')
-  
-      if (response.ok) {
-        const data = await response.json()
-        if (!data) {
-          return
+  useEffect(() => {
+    const fetchRoutes = async () => {
+      // Get a list of all routes with at least one trip
+      try {
+        const response = await fetch('/routes')
+    
+        if (response.ok) {
+          const data = await response.json()
+          setRoutes(data)
+        } else {
+          throw new Error('Bad request')
         }
-
-        setFilters({
-          ...filters,
-          dateRange: [
-            DateTime.fromFormat(data.start_date.toString(), 'yyyyMMdd').toJSDate(),
-            DateTime.fromFormat(data.end_date.toString(), 'yyyyMMdd').toJSDate()
-          ]
-        })
-      } else {
-        throw new Error('Bad request')
+      } catch (error) {
+        console.warn(error)
       }
-    } catch (error) {
-      console.warn(error)
     }
+
+    const fetchBoardAlights = async () => {
+      // Get the max date range for board/alight data
+      try {
+        const response = await fetch('/boardalight-date-range')
+    
+        if (response.ok) {
+          const data = await response.json()
+          if (!data) {
+            return
+          }
+
+          setFilters(filters => ({
+            ...filters,
+            dateRange: [
+              DateTime.fromFormat(data.start_date.toString(), 'yyyyMMdd').toJSDate(),
+              DateTime.fromFormat(data.end_date.toString(), 'yyyyMMdd').toJSDate()
+            ]
+          }))
+        } else {
+          throw new Error('Bad request')
+        }
+      } catch (error) {
+        console.warn(error)
+      }
+    }
+
+    fetchRoutes()
+    fetchBoardAlights()
   }, [])
 
-  useEffect(async () => {
-    if (filters.routeId !== 'all' && filters.directionId !== 'all') {
+  useEffect(() => {
+    const fetchStops = async () => {
       try {
         const response = await fetch(`/stops?route_id=${filters.routeId}&direction_id=${filters.directionId}`)
     
@@ -72,6 +79,10 @@ const Filters = ({ visualize }) => {
       } catch (error) {
         console.warn(error)
       }
+    }
+
+    if (filters.routeId !== 'all' && filters.directionId !== 'all') {
+      fetchStops()
     }
   }, [filters])
 
