@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import ReactMapGL, { Marker, NavigationControl, Popup } from 'react-map-gl';
+import ReactMapGL, { Marker, NavigationControl, Popup } from 'react-map-gl'
 import WebMercatorViewport from 'viewport-mercator-project'
 import { compact, maxBy, minBy, startCase } from 'lodash'
 import Gradient from 'javascript-color-gradient'
@@ -7,7 +7,7 @@ import Gradient from 'javascript-color-gradient'
 import ToggleMenu from './toggle-menu.js'
 
 import { formatNumber } from '../lib/formatters.js'
-import { getAlightingFieldName, getBoardingFieldName } from '../lib/utils.js';
+import { getAlightingFieldName, getBoardingFieldName } from '../lib/utils.js'
 
 const getBounds = stops => {
   if (!stops) {
