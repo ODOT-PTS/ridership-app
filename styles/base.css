@@ -1,5 +1,9 @@
+a {
+  @apply underline text-blue-600 hover:text-blue-800
+}
+
 .btn-blue {
-  @apply bg-blue-700 px-5 py-2 text-lg shadow-sm font-medium tracking-wider border text-blue-100 rounded-lg hover:shadow-lg hover:bg-blue-600;
+  @apply no-underline bg-blue-700 px-5 py-2 text-lg shadow-sm font-medium tracking-wider border text-white rounded-lg hover:shadow-lg hover:bg-blue-600 hover:text-blue-100;
 }
 
 .highlight {

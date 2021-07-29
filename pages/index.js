@@ -9,6 +9,7 @@ import { formatAgencyName } from '../lib/formatters.js'
 import Filters from '../components/filters.js'
 import Loading from '../components/loading.js'
 import Results from '../components/results.js'
+import Footer from '../components/footer'
 
 export default function Home() {
   const [appliedFilters, setAppliedFilters] = useState()
@@ -100,9 +101,7 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className={styles.footer}>
-        
-      </footer>
+      <Footer />
     </div>
   )
 }
