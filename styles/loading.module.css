@@ -1,39 +1,135 @@
 .loading {
-  font-size: 20px;
-  text-align: center;
   position: absolute;
   top: 40%;
   right: 50%;
   margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 15px 8px 0 15px;
+  overflow: hidden;
 }
 
 .loading-text {
-  margin-top: 7px;
+  font-size: 20px;
+  text-align: center;
+  color: #666;
+  padding-bottom: 8px;
 }
 
-.lds-dual-ring {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
+.loader {
+  width: 8em;
+  height: 10em;
+  font-size: 20px;
+  margin-bottom: -5px;
 }
 
-.lds-dual-ring:after {
-  content: " ";
-  display: block;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border-radius: 50%;
-  border: 6px solid #333;
-  border-color: #333 transparent #333 transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
+.train {
+  width: 6em;
+  height: 6em;
+  background: 
+      radial-gradient(circle at 20% 80%, currentColor 0.6em, transparent 0.6em),
+      radial-gradient(circle at 80% 80%, currentColor 0.6em, transparent 0.6em),
+      #bbb;
+  border-radius: 1em;
+  position: relative;
+  left: 1em;
+  color: #444;
+  animation: train-animate 1.5s infinite ease-in-out;
 }
 
-@keyframes lds-dual-ring {
+@keyframes train-animate {
+  0%, 100% {
+      transform: rotate(0deg);
+  }
+
+  25%, 75% {
+      transform: rotate(0.5deg);
+  }
+
+  50% {
+      transform: rotate(-0.5deg);
+  }
+}
+
+.train::before {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 2.3em;
+  background-color: currentColor;
+  border-radius: 0.4em;
+  top: 1.2em;
+  left: 10%;
+}
+
+.train::after {
+  content: '';
+  position: absolute;
+  width: 25%;
+  height: 0.4em;
+  background-color: currentColor;
+  border-radius: 0.3em;
+  top: 0.4em;
+  left: calc((100% - 25%) / 2);
+}
+
+.track {
+  width: 8em;
+  position: relative;
+}
+
+.track::before,
+.track::after {
+  content: '';
+  position: absolute;
+  width: 0.3em;
+  height: 4em;
+  background-color: #bbb;
+  border-radius: 0.4em;
+  transform-origin: bottom;
+}
+
+.track::before {
+  left: 0;
+  transform: skewX(-27deg);
+}
+
+.track::after {
+  right: 0;
+  transform: skewX(27deg);
+}
+
+.track span {
+  width: inherit;
+  height: 0.3em;
+  background-color: #bbb;
+  position: absolute;
+  top: 4em;
+  animation: track-animate 1s linear infinite;
+}
+
+.track span:nth-child(2) {
+  animation-delay: -0.33s;
+}
+
+.track span:nth-child(3) {
+  animation-delay: -0.66s;
+}
+
+@keyframes track-animate {
   0% {
-    transform: rotate(0deg);
+      transform: translateY(-0.5em) scaleX(0.9);
+      filter: opacity(0);
   }
+
+  10%, 90% {
+      filter: opacity(1);
+  }
+
   100% {
-    transform: rotate(360deg);
+      transform: translateY(-4em) scaleX(0.5);
+      filter: opacity(0);
   }
 }
+
