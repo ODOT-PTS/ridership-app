@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import untildify from 'untildify'
 
 import express from 'express'
 import next from 'next'
@@ -16,7 +17,7 @@ const handle = app.getRequestHandler()
 app.prepare().then(async () => {
   const server = express()
 
-  const db = await openDb({ sqlitePath: process.env.SQLITE_PATH })
+  const db = await openDb({ sqlitePath: untildify(process.env.SQLITE_PATH) })
 
   server.get('/agencies', async (req, res) => {
     try {
