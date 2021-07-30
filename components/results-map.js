@@ -46,7 +46,7 @@ function Pins({ ridershipData, setPopupInfo, boardingsOrAlightings, type }) {
   return ridershipData.map(stop => {
     const size = sizePin(stop[fieldName], maxValue)
     return (
-      <Marker latitude={stop.stop_lat} longitude={stop.stop_lon} key={stop.stop_id}>
+      <Marker latitude={stop.stop_lat} longitude={stop.stop_lon} key={stop.stop_id} offsetLeft={-size / 2} offsetTop={-size / 2}>
         <svg
           height={size}
           viewBox={`0 0 ${size} ${size}`}
