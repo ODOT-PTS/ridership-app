@@ -83,7 +83,7 @@ export default function Home() {
 
       <main className="container mx-auto justify-center mb-5">
         <div className="flex">
-          <div className="self-start flex-shrink-0 grid grid-cols-1 gap-2 px-3">
+          <div className="self-start flex-shrink-0 grid grid-cols-1 gap-2 w-72 px-3">
             <h1 className={styles.title}>
               {agencyName} Ridership
             </h1>

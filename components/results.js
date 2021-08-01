@@ -98,7 +98,7 @@ const Results = ({ ridershipData, filters }) => {
       {filters.grouping === 'time-of-day' && <RidershipByTimeOfDay ridershipData={ridershipData} type={type} />}
       {filters.grouping === 'trip' && <RidershipByTrip ridershipData={ridershipData} type={type} />}
       {filters.grouping === 'stop' && <RidershipByStop ridershipData={ridershipData} type={type} />}
-      {filters.grouping === 'stop' && <ResultsMap ridershipData={ridershipData} type={type} />}
+      {filters.grouping === 'stop' && <ResultsMap ridershipData={ridershipData} type={type} filters={filters} />}
       <ResultsTable ridershipData={ridershipData} filters={filters} />
     </>
   )
