@@ -274,7 +274,7 @@ const ResultsMap = ({ ridershipData, type, filters }) => {
     { padding: 40 }
   )
 
-  const viewSupportsLoadCounts = type === 'passengers' && filters.routeId !== 'all' && filters.directionId !== 'all'
+  const viewSupportsLoadCounts = type === 'passengers' && filters.routeId !== 'all' && filters.directionId !== 'all' && ridershipData.some(item => item.load_type !== null)
 
   const [viewport, setViewport] = useState(bounds)
   const [popupInfo, setPopupInfo] = useState(null)
