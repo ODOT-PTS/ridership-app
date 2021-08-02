@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import ReactMapGL, { Layer, Marker, NavigationControl, Popup, Source } from 'react-map-gl'
 import WebMercatorViewport from 'viewport-mercator-project'
 import { compact, maxBy, minBy, startCase } from 'lodash'
@@ -129,7 +129,7 @@ const Line = ({ ridershipData, setPopupInfo }) => {
     const bucket = buckets.find(bucket => bucket.min <= feature.properties.loadCount && bucket.max > feature.properties.loadCount)
     feature.properties = {
       ...feature.properties,
-      lineColor: bucket.color
+      lineColor: bucket?.color || '#cccccc'
     }
   }
 
@@ -274,9 +274,17 @@ const ResultsMap = ({ ridershipData, type, filters }) => {
     { padding: 40 }
   )
 
+  const viewSupportsLoadCounts = type === 'passengers' && filters.routeId !== 'all' && filters.directionId !== 'all'
+
   const [viewport, setViewport] = useState(bounds)
   const [popupInfo, setPopupInfo] = useState(null)
-  const [mapField, setMapField] = useState('boardings')
+  const [mapField, setMapField] = useState(viewSupportsLoadCounts ? 'loadCounts' : 'boardings')
+
+  useEffect(() => {
+    if (!viewSupportsLoadCounts && mapField === 'loadCounts') {
+      setMapField('boardings')
+    }
+  }, [viewSupportsLoadCounts, mapField])
 
   const mapData = useMemo(
     () => {
@@ -305,8 +313,8 @@ const ResultsMap = ({ ridershipData, type, filters }) => {
     }
   ]
 
-  if (type === 'passengers' && filters.routeId !== 'all' && filters.directionId !== 'all') {
-    fieldOptions.push({
+  if (viewSupportsLoadCounts) {
+    fieldOptions.unshift({
       value: 'loadCounts',
       label: 'Load Count'
     })
