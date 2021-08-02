@@ -10,8 +10,8 @@ import { divideIntoBuckets, formatNumber } from '../lib/formatters.js'
 import { getAlightingFieldName, getBoardingFieldName } from '../lib/utils.js'
 
 const getBounds = stops => {
-  if (!stops) {
-    return []
+  if (!stops || stops.length === 0) {
+    return [[0, 0], [0, 0]]
   }
 
   const maxLat = maxBy(stops, 'stop_lat').stop_lat
