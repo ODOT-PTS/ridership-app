@@ -1,9 +1,9 @@
 import styles from '../styles/loading.module.css'
 
 const Loading = ({ loading }) => {
-  // if (!loading) {
-  //   return null
-  // }
+  if (!loading) {
+    return null
+  }
 
   return (
     <div className={styles.loading}>
