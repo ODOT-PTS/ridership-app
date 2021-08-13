@@ -113,21 +113,38 @@ const Filters = ({ visualize }) => {
 
   return (
     <>
-      <label className="block">
-        <span className="text-gray-700">Date Range</span>
+      <div className="flex">
+        <label className="block">
+          <span className="text-gray-700">Start Date</span>
 
-        <div className="mt-1 block">
-          <DatePicker
-            selectsRange={true}
-            startDate={filters.dateRange[0]}
-            endDate={filters.dateRange[1]}
-            onChange={(update) => setFilters({ ...filters, dateRange: update })}
-            isClearable={true}
-            wrapperClassName="w-full"
-            className="w-full"
-          />
-        </div>
-      </label>
+          <div className="mt-1 block">
+            <DatePicker
+              selected={filters.dateRange[0]}
+              onChange={date => {
+                const dateRange = [date, filters.dateRange[1]];
+                setFilters({ ...filters, dateRange })
+              }}
+              wrapperClassName="w-full"
+              className="w-full border-r-0"
+            />
+          </div>
+        </label>
+        <label className="block">
+          <span className="text-gray-700">End Date</span>
+
+          <div className="mt-1 block">
+            <DatePicker
+              selected={filters.dateRange[1]}
+              onChange={date => {
+                const dateRange = [filters.dateRange[0], date];
+                setFilters({ ...filters, dateRange })
+              }}
+              wrapperClassName="w-full"
+              className="w-full"
+            />
+          </div>
+        </label>
+      </div>
 
       <label className="block">
         <span className="text-gray-700">Group By</span>

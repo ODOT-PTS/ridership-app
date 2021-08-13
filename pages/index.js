@@ -45,8 +45,12 @@ export default function Home() {
     setLoading(true)
 
     // Validation
-    if (filters.dateRange[0] === null || filters.dateRange[1] === null) {
-      return validationError('Date range is required')
+    if (filters.dateRange[0] === null) {
+      return validationError('Start Date is required')
+    }
+
+    if (filters.dateRange[1] === null) {
+      return validationError('End Date is required')
     }
 
     try {
