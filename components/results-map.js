@@ -77,7 +77,7 @@ const Line = ({ ridershipData, setPopupInfo }) => {
         type: 'LineString',
       },
       properties: {
-        loadCount: stop.load_count
+        loadCount: stop.average_load_count
       },
       type: 'Feature'
     }
@@ -183,11 +183,11 @@ const Line = ({ ridershipData, setPopupInfo }) => {
         )
       })}
       <div className="absolute bottom-8 right-2 bg-white px-3 py-1 rounded-md">
-        <strong>Load Count</strong>
+        <strong>Average Load Count</strong>
         {buckets.map(bucket => (
           <div className="pl-2 flex items-center" key={bucket.min}>
             <div className="w-4 h-4 mr-1" style={{ backgroundColor: bucket.color }}></div>
-            {bucket.min}-{bucket.max}
+            {bucket.min.toFixed(1)}-{bucket.max.toFixed(1)}
           </div>
         ))}
       </div>
@@ -212,8 +212,8 @@ const MapPopup = ({ popupInfo, setPopupInfo }) => {
       name: 'Alightings',
     },
     {
-      key: 'load_count',
-      name: `${loadTypeLabel} Load Count`,
+      key: 'average_load_count',
+      name: `${loadTypeLabel} Average Load Count`,
     },
     {
       key: 'bike_boardings',
@@ -316,7 +316,7 @@ const ResultsMap = ({ ridershipData, type, filters }) => {
   if (viewSupportsLoadCounts) {
     fieldOptions.unshift({
       value: 'loadCounts',
-      label: 'Load Count'
+      label: 'Average Load Count'
     })
   }
 

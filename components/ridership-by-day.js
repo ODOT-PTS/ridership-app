@@ -1,7 +1,7 @@
 import { Line } from 'react-chartjs-2'
 
 import { formatAlightingLabel, formatBoardingLabel, formatYAxisLabel } from '../lib/formatters.js'
-import { chartColors, getBoardingFieldName, getAlightingFieldName, getLoadCountFieldName } from '../lib/utils.js'
+import { chartColors, getBoardingFieldName, getAlightingFieldName } from '../lib/utils.js'
 
 const RidershipByDay = ({ ridershipData, type }) => {
   if (!ridershipData || ridershipData.length === 0) {
@@ -10,7 +10,6 @@ const RidershipByDay = ({ ridershipData, type }) => {
 
   const boardingField = getBoardingFieldName(type)
   const alightingField = getAlightingFieldName(type)
-  const loadCountField = getLoadCountFieldName(type)
 
   const data = {
     labels: ridershipData.map(item => item.label),
@@ -31,12 +30,12 @@ const RidershipByDay = ({ ridershipData, type }) => {
     }]
   }
 
-  if (loadCountField !== null && ridershipData.some(item => item.load_type !== null)) {
+  if (type === 'passengers' && ridershipData.some(item => item.load_type !== null)) {
     data.datasets.push({
-      label: 'Load Count',
+      label: 'Average Load Count',
       backgroundColor: chartColors.load_count,
       borderColor: chartColors.load_count,
-      data: ridershipData.map(item => item[loadCountField]),
+      data: ridershipData.map(item => item.average_load_count),
       lineTension: 0,
       fill: false
     })

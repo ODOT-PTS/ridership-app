@@ -18,8 +18,8 @@ const getColumns = filters => {
       formatter: formatNumber
     },
     {
-      id: 'load_count',
-      name: 'Load Count',
+      id: 'average_load_count',
+      name: 'Average Load Count',
       formatter: formatNumber
     },
     {
