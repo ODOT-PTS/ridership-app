@@ -9,6 +9,7 @@ import { formatDirectionName, formatRouteName } from '../lib/formatters.js'
 const Filters = ({ visualize }) => {
   const [routes, setRoutes] = useState()
   const [stops, setStops] = useState()
+  const [availableDateRange, setAvailableDateRange] = useState([])
   const [filters, setFilters] = useState({
     dateRange: [DateTime.now().minus({ months: 3 }).toJSDate(), DateTime.now().minus({ days: 1 }).toJSDate()],
     routeId: 'all',
@@ -53,6 +54,10 @@ const Filters = ({ visualize }) => {
               DateTime.fromFormat(data.end_date.toString(), 'yyyyMMdd').toJSDate()
             ]
           }))
+          setAvailableDateRange([
+            DateTime.fromFormat(data.start_date.toString(), 'yyyyMMdd').toISODate(),
+            DateTime.fromFormat(data.end_date.toString(), 'yyyyMMdd').toISODate()
+          ])
         } else {
           throw new Error('Bad request')
         }
@@ -113,6 +118,7 @@ const Filters = ({ visualize }) => {
 
   return (
     <>
+      {availableDateRange.length > 0 && <div className="py-2 px-3 bg-blue-100 border border-gray-300 rounded-sm leading-none">Data available {availableDateRange[0]} through {availableDateRange[1]}</div>}
       <div className="flex">
         <label className="block">
           <span className="text-gray-700">Start Date</span>
