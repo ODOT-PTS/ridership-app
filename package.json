@@ -1,7 +1,23 @@
 {
   "name": "ridership-app",
+  "description": "Visualize and explore transit ridership data from GTFS-Ride.",
   "version": "0.1.0",
   "private": true,
+  "keywords": [
+    "transit",
+    "gtfs",
+    "transportation",
+    "gtfs-ride"
+  ],
+  "author": "Brendan Nee <brendan@blinktag.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ODOT-PTS/ridership-app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ODOT-PTS/ridership-app.git"
+  },
   "scripts": {
     "dev": "node server.mjs",
     "build": "next build",
