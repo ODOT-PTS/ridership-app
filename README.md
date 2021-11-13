@@ -1,6 +1,6 @@
 # Ridership App
 
-Visualize transit ridership data. Ridership App is a webapp that loads transit ridership data in [GTFS-Ride](http://gtfs-ride.org) format and creates web-based visualization and data exports.
+Visualize transit ridership data. Ridership App is a webapp that loads transit ridership data in [GTFS-Ride](https://gtfsride.org) format and creates web-based visualization and data exports.
 
 It is built with [next.js](https://nextjs.org).
 
