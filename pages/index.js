@@ -95,7 +95,7 @@ export default function Home() {
               visualize={visualize}
             />
           </div>
-          <div className="flex-grow-1 w-full ml-5 mt-2">
+          <div className="ml-5 mt-2" style={{ width: 'calc(100% - 320px)' }}>
             <Loading loading={loading} />
             <Results
               ridershipData={ridershipData}

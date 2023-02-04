@@ -1,4 +1,24 @@
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  BarElement,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Tooltip,
+  Legend,
+} from 'chart.js'
 import { Line } from 'react-chartjs-2'
+ChartJS.register(
+  CategoryScale,
+  BarElement,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Tooltip,
+  Legend
+)
+
 
 import { formatAlightingLabel, formatBoardingLabel, formatYAxisLabel } from '../lib/formatters.js'
 import { chartColors, getBoardingFieldName, getAlightingFieldName } from '../lib/utils.js'
@@ -19,14 +39,16 @@ const RidershipByTimeOfDay = ({ ridershipData, type }) => {
       borderColor: chartColors.boarding,
       data: ridershipData.map(item => item[boardingField]),
       lineTension: 0,
-      fill: false
+      fill: false,
+      yAxisID: 'yAxis',
     }, {
       label: formatAlightingLabel(type),
       backgroundColor: chartColors.alighting,
       borderColor: chartColors.alighting,
       data: ridershipData.map(item => item[alightingField]),
       lineTension: 0,
-      fill: false
+      fill: false,
+      yAxisID: 'yAxis',
     }]
   }
 
@@ -37,7 +59,8 @@ const RidershipByTimeOfDay = ({ ridershipData, type }) => {
       borderColor: chartColors.load_count,
       data: ridershipData.map(item => item.average_load_count),
       lineTension: 0,
-      fill: false
+      fill: false,
+      yAxisID: 'yAxis',
     })
   }
   
@@ -56,20 +79,20 @@ const RidershipByTimeOfDay = ({ ridershipData, type }) => {
       intersect: true
     },
     scales: {
-      xAxes: [{
+      x: {
         display: true,
         scaleLabel: {
           display: true,
           labelString: 'Time of Day'
         }
-      }],
-      yAxes: [{
+      },
+      yAxis: {
         display: true,
         scaleLabel: {
           display: true,
           labelString: formatYAxisLabel(type)
         }
-      }]
+      }
     }
   }
 

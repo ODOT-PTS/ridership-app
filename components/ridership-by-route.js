@@ -1,4 +1,23 @@
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  BarElement,
+  LinearScale,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js'
 import { Bar } from 'react-chartjs-2'
+ChartJS.register(
+  CategoryScale,
+  BarElement,
+  LinearScale,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+)
 
 import { formatAlightingLabel, formatBoardingLabel, formatYAxisLabel } from '../lib/formatters.js'
 import { chartColors, getBoardingFieldName, getAlightingFieldName } from '../lib/utils.js'
@@ -17,12 +36,14 @@ const RidershipByRoute = ({ ridershipData, type }) => {
       label: formatBoardingLabel(type),
       backgroundColor: chartColors.boarding,
       borderColor: chartColors.boarding,
-      data: ridershipData.map(item => item[boardingField])
+      data: ridershipData.map(item => item[boardingField]),
+      yAxisID: 'yAxis',
     }, {
       label: formatAlightingLabel(type),
       backgroundColor: chartColors.alighting,
       borderColor: chartColors.alighting,
-      data: ridershipData.map(item => item[alightingField])
+      data: ridershipData.map(item => item[alightingField]),
+      yAxisID: 'yAxis',
     }]
   }
 
@@ -31,7 +52,8 @@ const RidershipByRoute = ({ ridershipData, type }) => {
       label: 'Average Load Count',
       backgroundColor: chartColors.load_count,
       borderColor: chartColors.load_count,
-      data: ridershipData.map(item => item.average_load_count)
+      data: ridershipData.map(item => item.average_load_count),
+      yAxisID: 'yAxis',
     })
   }
   
@@ -50,20 +72,20 @@ const RidershipByRoute = ({ ridershipData, type }) => {
       intersect: true
     },
     scales: {
-      xAxes: [{
+      x: {
         display: true,
         scaleLabel: {
           display: true,
           labelString: 'Route'
         }
-      }],
-      yAxes: [{
+      },
+      yAxis: {
         display: true,
         scaleLabel: {
           display: true,
           labelString: formatYAxisLabel(type)
         }
-      }]
+      }
     }
   }
 

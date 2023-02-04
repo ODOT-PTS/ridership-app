@@ -40,7 +40,7 @@ const Pins = ({ ridershipData, setPopupInfo, mapField, type }) => {
     ...compact(ridershipData.map(item => item[alightingFieldName]))
   )
   const colorGradient = new Gradient()
-  colorGradient.setGradient('#F4B543', '#E94246', '#5C1B91')
+  colorGradient.setColorGradient('#F4B543', '#E94246', '#5C1B91')
   colorGradient.setMidpoint(57)
 
   return ridershipData.map(stop => {
@@ -118,7 +118,7 @@ const Line = ({ ridershipData, setPopupInfo }) => {
   // Assign Line width into 5 buckets
   const buckets = divideIntoBuckets(features.map(feature => feature.properties.loadCount), 5)
   const loadCountColorGradient = new Gradient()
-  loadCountColorGradient.setGradient('#F4B543', '#E94246', '#5C1B91')
+  loadCountColorGradient.setColorGradient('#F4B543', '#E94246', '#5C1B91')
   loadCountColorGradient.setMidpoint(5)
 
   for (const [index, bucket] of buckets.entries()) {
