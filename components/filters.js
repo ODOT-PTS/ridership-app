@@ -11,7 +11,10 @@ const Filters = ({ visualize }) => {
   const [stops, setStops] = useState()
   const [availableDateRange, setAvailableDateRange] = useState([])
   const [filters, setFilters] = useState({
-    dateRange: [DateTime.now().minus({ months: 3 }).toJSDate(), DateTime.now().minus({ days: 1 }).toJSDate()],
+    dateRange: [
+      DateTime.now().minus({ months: 3 }).toJSDate(),
+      DateTime.now().minus({ days: 1 }).toJSDate(),
+    ],
     routeId: 'all',
     directionId: 'all',
     stopId: 'all',
@@ -24,7 +27,7 @@ const Filters = ({ visualize }) => {
       // Get a list of all routes with at least one trip
       try {
         const response = await fetch('/routes')
-    
+
         if (response.ok) {
           const data = await response.json()
           setRoutes(data)
@@ -40,23 +43,35 @@ const Filters = ({ visualize }) => {
       // Get the max date range for board/alight data
       try {
         const response = await fetch('/boardalight-date-range')
-    
+
         if (response.ok) {
           const data = await response.json()
           if (!data) {
             return
           }
 
-          setFilters(filters => ({
+          setFilters((filters) => ({
             ...filters,
             dateRange: [
-              DateTime.fromFormat(data.start_date.toString(), 'yyyyMMdd').toJSDate(),
-              DateTime.fromFormat(data.end_date.toString(), 'yyyyMMdd').toJSDate()
-            ]
+              DateTime.fromFormat(
+                data.start_date.toString(),
+                'yyyyMMdd'
+              ).toJSDate(),
+              DateTime.fromFormat(
+                data.end_date.toString(),
+                'yyyyMMdd'
+              ).toJSDate(),
+            ],
           }))
           setAvailableDateRange([
-            DateTime.fromFormat(data.start_date.toString(), 'yyyyMMdd').toISODate(),
-            DateTime.fromFormat(data.end_date.toString(), 'yyyyMMdd').toISODate()
+            DateTime.fromFormat(
+              data.start_date.toString(),
+              'yyyyMMdd'
+            ).toISODate(),
+            DateTime.fromFormat(
+              data.end_date.toString(),
+              'yyyyMMdd'
+            ).toISODate(),
           ])
         } else {
           throw new Error('Bad request')
@@ -73,8 +88,10 @@ const Filters = ({ visualize }) => {
   useEffect(() => {
     const fetchStops = async () => {
       try {
-        const response = await fetch(`/stops?route_id=${filters.routeId}&direction_id=${filters.directionId}`)
-    
+        const response = await fetch(
+          `/stops?route_id=${filters.routeId}&direction_id=${filters.directionId}`
+        )
+
         if (response.ok) {
           const data = await response.json()
           setStops(data)
@@ -92,7 +109,7 @@ const Filters = ({ visualize }) => {
   }, [filters])
 
   const getDirectionOptions = () => {
-    const route = routes.find(route => route.route_id === filters.routeId)
+    const route = routes.find((route) => route.route_id === filters.routeId)
 
     if (!route) {
       return null
@@ -101,24 +118,34 @@ const Filters = ({ visualize }) => {
     const directionOptions = []
 
     if (route.directions.length > 1) {
-      directionOptions.push(<option value="all" key="all">Both</option>)
+      directionOptions.push(
+        <option value="all" key="all">
+          Both
+        </option>
+      )
     }
 
     for (const direction of route.directions) {
       directionOptions.push(
-        <option 
-          value={direction.direction_id.toString()} 
+        <option
+          value={direction.direction_id.toString()}
           key={direction.direction_id}
-        >{formatDirectionName(direction)}</option>
+        >
+          {formatDirectionName(direction)}
+        </option>
       )
     }
-    
+
     return directionOptions
   }
 
   return (
     <>
-      {availableDateRange.length > 0 && <div className="py-2 px-3 bg-blue-100 border border-gray-300 rounded-sm leading-none">Data available {availableDateRange[0]} through {availableDateRange[1]}</div>}
+      {availableDateRange.length > 0 && (
+        <div className="py-2 px-3 bg-blue-100 border border-gray-300 rounded-sm leading-none">
+          Data available {availableDateRange[0]} through {availableDateRange[1]}
+        </div>
+      )}
       <div className="flex">
         <label className="block">
           <span className="text-gray-700">Start Date</span>
@@ -126,8 +153,8 @@ const Filters = ({ visualize }) => {
           <div className="mt-1 block">
             <DatePicker
               selected={filters.dateRange[0]}
-              onChange={date => {
-                const dateRange = [date, filters.dateRange[1]];
+              onChange={(date) => {
+                const dateRange = [date, filters.dateRange[1]]
                 setFilters({ ...filters, dateRange })
               }}
               wrapperClassName="w-full"
@@ -141,8 +168,8 @@ const Filters = ({ visualize }) => {
           <div className="mt-1 block">
             <DatePicker
               selected={filters.dateRange[1]}
-              onChange={date => {
-                const dateRange = [filters.dateRange[0], date];
+              onChange={(date) => {
+                const dateRange = [filters.dateRange[0], date]
                 setFilters({ ...filters, dateRange })
               }}
               wrapperClassName="w-full"
@@ -156,7 +183,7 @@ const Filters = ({ visualize }) => {
         <span className="text-gray-700">Group By</span>
         <select
           className="mt-1 block w-full"
-          onChange={event => {
+          onChange={(event) => {
             const newFilters = { ...filters, grouping: event.target.value }
 
             if (event.target.value === 'route') {
@@ -166,7 +193,7 @@ const Filters = ({ visualize }) => {
             } else if (event.target.value === 'stop') {
               newFilters.stopId = 'all'
             }
-  
+
             setFilters(newFilters)
           }}
         >
@@ -181,79 +208,118 @@ const Filters = ({ visualize }) => {
         </select>
       </label>
 
-      {filters.grouping === 'time-of-day' && <label className="block">
-        <span className="text-gray-700">Time Bucket Size</span>
-        <select
-          className="mt-1 block w-full"
-          onChange={event => setFilters({
-            ...filters,
-            timeBucketSize: event.target.value
-          })}
-          value={filters.timeBucketSize}
-        >
-          <option value="120">2 hours</option>
-          <option value="60">1 hour</option>
-          <option value="30">30 minutes</option>
-          <option value="15">15 minutes</option>
-          <option value="10">10 minutes</option>
-          <option value="5">5 minutes</option>
-        </select>
-      </label>}
+      {filters.grouping === 'time-of-day' && (
+        <label className="block">
+          <span className="text-gray-700">Time Bucket Size</span>
+          <select
+            className="mt-1 block w-full"
+            onChange={(event) =>
+              setFilters({
+                ...filters,
+                timeBucketSize: event.target.value,
+              })
+            }
+            value={filters.timeBucketSize}
+          >
+            <option value="120">2 hours</option>
+            <option value="60">1 hour</option>
+            <option value="30">30 minutes</option>
+            <option value="15">15 minutes</option>
+            <option value="10">10 minutes</option>
+            <option value="5">5 minutes</option>
+          </select>
+        </label>
+      )}
 
-      {filters.grouping !== 'route' && <label className="block">
-        <span className="text-gray-700">Route</span>
-        <select
-          className="mt-1 block w-full"
-          onChange={event => setFilters({
-            ...filters,
-            routeId: event.target.value,
-            routeName: event.target.value !== 'all' ? event.nativeEvent.target[event.nativeEvent.target.selectedIndex].text : '',
-            directionId: 'all',
-            stopId: 'all'
-          })}
-        >
-          <option value="all">All</option>
-          {routes && routes.map(route => <option key={route.route_id} value={route.route_id}>{formatRouteName(route)}</option>)}
-        </select>
-      </label>}
+      {filters.grouping !== 'route' && (
+        <label className="block">
+          <span className="text-gray-700">Route</span>
+          <select
+            className="mt-1 block w-full"
+            onChange={(event) =>
+              setFilters({
+                ...filters,
+                routeId: event.target.value,
+                routeName:
+                  event.target.value !== 'all'
+                    ? event.nativeEvent.target[
+                        event.nativeEvent.target.selectedIndex
+                      ].text
+                    : '',
+                directionId: 'all',
+                stopId: 'all',
+              })
+            }
+          >
+            <option value="all">All</option>
+            {routes &&
+              routes.map((route) => (
+                <option key={route.route_id} value={route.route_id}>
+                  {formatRouteName(route)}
+                </option>
+              ))}
+          </select>
+        </label>
+      )}
 
-      {filters.grouping !== 'route' && filters.routeId !== 'all' && <label className="block">
-        <span className="text-gray-700">Direction</span>
-        <select
-          className="mt-1 block w-full"
-          onChange={event => setFilters({
-            ...filters,
-            directionId: event.target.value,
-            directionName: event.target.value !== 'all' ? event.nativeEvent.target[event.nativeEvent.target.selectedIndex].text : '',
-            stopId: 'all',
-            stopName: ''
-          })}
-          value={filters.directionId}
-        >
-          {getDirectionOptions()}
-        </select>
-      </label>}
+      {filters.grouping !== 'route' && filters.routeId !== 'all' && (
+        <label className="block">
+          <span className="text-gray-700">Direction</span>
+          <select
+            className="mt-1 block w-full"
+            onChange={(event) =>
+              setFilters({
+                ...filters,
+                directionId: event.target.value,
+                directionName:
+                  event.target.value !== 'all'
+                    ? event.nativeEvent.target[
+                        event.nativeEvent.target.selectedIndex
+                      ].text
+                    : '',
+                stopId: 'all',
+                stopName: '',
+              })
+            }
+            value={filters.directionId}
+          >
+            {getDirectionOptions()}
+          </select>
+        </label>
+      )}
 
-      {filters.directionId !== 'all' && filters.grouping !== 'stop' && <label className="block">
-        <span className="text-gray-700">Stop</span>
-        <select
-          className="mt-1 block w-full"
-          onChange={event => setFilters({
-            ...filters,
-            stopId: event.target.value,
-            stopName: event.target.value !== 'all' ? stops.find(stop => stop.stop_id === event.target.value).stop_name : '',
-          })}
-          value={filters.stopId}
-        >
-          <option value="all">All</option>
-          {stops && stops.map(stop => <option key={stop.stop_id} value={stop.stop_id}>{stop.stop_name}</option>)}
-        </select>
-      </label>}
+      {filters.directionId !== 'all' && filters.grouping !== 'stop' && (
+        <label className="block">
+          <span className="text-gray-700">Stop</span>
+          <select
+            className="mt-1 block w-full"
+            onChange={(event) =>
+              setFilters({
+                ...filters,
+                stopId: event.target.value,
+                stopName:
+                  event.target.value !== 'all'
+                    ? stops.find((stop) => stop.stop_id === event.target.value)
+                        .stop_name
+                    : '',
+              })
+            }
+            value={filters.stopId}
+          >
+            <option value="all">All</option>
+            {stops &&
+              stops.map((stop) => (
+                <option key={stop.stop_id} value={stop.stop_id}>
+                  {stop.stop_name}
+                </option>
+              ))}
+          </select>
+        </label>
+      )}
 
-      <button
-        className="btn-blue mt-3"
-        onClick={() => visualize(filters)}
-      >📈 Visualize</button>
+      <button className="btn-blue mt-3" onClick={() => visualize(filters)}>
+        📈 Visualize
+      </button>
     </>
   )
 }

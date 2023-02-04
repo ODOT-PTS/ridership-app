@@ -21,7 +21,7 @@ export default function Home() {
     const fetchAgencies = async () => {
       try {
         const response = await fetch('/agencies')
-    
+
         if (response.ok) {
           const data = await response.json()
           setAgencyName(formatAgencyName(data))
@@ -35,7 +35,7 @@ export default function Home() {
     fetchAgencies()
   }, [])
 
-  const validationError = message => {
+  const validationError = (message) => {
     alert(message)
     setLoading(false)
   }
@@ -64,7 +64,9 @@ export default function Home() {
         time_bucket_size: filters.timeBucketSize,
       }
 
-      const response = await fetch('/ridership-data?' + new URLSearchParams(parameters))
+      const response = await fetch(
+        '/ridership-data?' + new URLSearchParams(parameters)
+      )
 
       if (response.ok) {
         const results = await response.json()
@@ -88,19 +90,12 @@ export default function Home() {
       <main className="container mx-auto justify-center mb-5">
         <div className="flex">
           <div className="self-start flex-shrink-0 grid grid-cols-1 gap-2 w-72 px-3">
-            <h1 className={styles.title}>
-              {agencyName} Ridership
-            </h1>
-            <Filters
-              visualize={visualize}
-            />
+            <h1 className={styles.title}>{agencyName} Ridership</h1>
+            <Filters visualize={visualize} />
           </div>
           <div className="ml-5 mt-2" style={{ width: 'calc(100% - 320px)' }}>
             <Loading loading={loading} />
-            <Results
-              ridershipData={ridershipData}
-              filters={appliedFilters}
-            />
+            <Results ridershipData={ridershipData} filters={appliedFilters} />
           </div>
         </div>
       </main>

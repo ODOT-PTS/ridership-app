@@ -5,195 +5,195 @@ import { DateTime } from 'luxon'
 
 import { formatNumber } from '../lib/formatters.js'
 
-const getColumns = filters => {
+const getColumns = (filters) => {
   const dataColumns = [
     {
       id: 'boardings',
       name: 'Boardings',
-      formatter: formatNumber
+      formatter: formatNumber,
     },
     {
       id: 'alightings',
       name: 'Alightings',
-      formatter: formatNumber
+      formatter: formatNumber,
     },
     {
       id: 'average_load_count',
       name: 'Average Load Count',
-      formatter: formatNumber
+      formatter: formatNumber,
     },
     {
       id: 'bike_boardings',
       name: 'Bike Boardings',
-      formatter: formatNumber
+      formatter: formatNumber,
     },
     {
       id: 'bike_alightings',
       name: 'Bike Alightings',
-      formatter: formatNumber
+      formatter: formatNumber,
     },
     {
       id: 'ramp_boardings',
       name: 'Ramp Boardings',
-      formatter: formatNumber
+      formatter: formatNumber,
     },
     {
       id: 'ramp_alightings',
       name: 'Ramp Alightings',
-      formatter: formatNumber
-    }
+      formatter: formatNumber,
+    },
   ]
 
   if (filters.grouping === 'route') {
     return [
       {
         id: 'label',
-        name: 'Route'
+        name: 'Route',
       },
-      ...dataColumns
+      ...dataColumns,
     ]
   } else if (filters.grouping === 'day') {
     return [
       {
         id: 'label',
-        name: 'Date'
+        name: 'Date',
       },
-      ...dataColumns
+      ...dataColumns,
     ]
   } else if (filters.grouping === 'day-of-week') {
     return [
       {
         id: 'label',
-        name: 'Day of Week'
+        name: 'Day of Week',
       },
-      ...dataColumns
+      ...dataColumns,
     ]
   } else if (filters.grouping === 'day-of-week-type') {
     return [
       {
         id: 'label',
-        name: 'Day of Week Type'
+        name: 'Day of Week Type',
       },
-      ...dataColumns
+      ...dataColumns,
     ]
   } else if (filters.grouping === 'time-of-day') {
     return [
       {
         id: 'label',
-        name: 'Time Range'
+        name: 'Time Range',
       },
-      ...dataColumns
+      ...dataColumns,
     ]
-  }  else if (filters.grouping === 'trip') {
+  } else if (filters.grouping === 'trip') {
     return [
       {
         id: 'label',
-        name: 'Trip'
+        name: 'Trip',
       },
-      ...dataColumns
+      ...dataColumns,
     ]
   } else if (filters.grouping === 'stop') {
     return [
       {
         id: 'label',
-        name: 'Stop Name'
+        name: 'Stop Name',
       },
       {
         id: 'stop_id',
-        name: 'Stop ID'
+        name: 'Stop ID',
       },
-      ...dataColumns
+      ...dataColumns,
     ]
   } else if (filters.grouping === 'none') {
     return [
       {
         id: 'service_date',
-        name: 'Service Date'
+        name: 'Service Date',
       },
       {
         id: 'service_departure_time',
-        name: 'Service Departure Time'
+        name: 'Service Departure Time',
       },
       {
         id: 'service_arrival_time',
-        name: 'Service Arrival Time'
+        name: 'Service Arrival Time',
       },
       {
         id: 'trip_id',
-        name: 'Trip ID'
+        name: 'Trip ID',
       },
       {
         id: 'stop_id',
-        name: 'Stop ID'
+        name: 'Stop ID',
       },
       {
         id: 'stop_sequence',
-        name: 'Stop Sequence'
+        name: 'Stop Sequence',
       },
       {
         id: 'record_use',
-        name: 'Record Use'
+        name: 'Record Use',
       },
       {
         id: 'schedule_relationship',
-        name: 'Schedule Relationship'
+        name: 'Schedule Relationship',
       },
       {
         id: 'boardings',
         name: 'Boardings',
-        formatter: formatNumber
+        formatter: formatNumber,
       },
       {
         id: 'alightings',
         name: 'Alightings',
-        formatter: formatNumber
+        formatter: formatNumber,
       },
       {
         id: 'current_load',
         name: 'Current Load',
-        formatter: formatNumber
+        formatter: formatNumber,
       },
       {
         id: 'load_count',
         name: 'Load Count',
-        formatter: formatNumber
+        formatter: formatNumber,
       },
       {
         id: 'load_type',
-        name: 'Load Type'
+        name: 'Load Type',
       },
       {
         id: 'rack_down',
-        name: 'Rack Down'
+        name: 'Rack Down',
       },
       {
         id: 'bike_boardings',
         name: 'Bike Boardings',
-        formatter: formatNumber
+        formatter: formatNumber,
       },
       {
         id: 'bike_alightings',
         name: 'Bike Alightings',
-        formatter: formatNumber
+        formatter: formatNumber,
       },
       {
         id: 'ramp_used',
-        name: 'Ramp Used'
+        name: 'Ramp Used',
       },
       {
         id: 'ramp_boardings',
         name: 'Ramp Boardings',
-        formatter: formatNumber
+        formatter: formatNumber,
       },
       {
         id: 'ramp_alightings',
         name: 'Ramp Alightings',
-        formatter: formatNumber
+        formatter: formatNumber,
       },
       {
         id: 'source',
-        name: 'Source'
-      }
+        name: 'Source',
+      },
     ]
   }
 }
@@ -204,7 +204,9 @@ const ResultsTable = ({ ridershipData, filters }) => {
   }
 
   const columns = getColumns(filters)
-  const startDateFormatted = DateTime.fromJSDate(filters.dateRange[0]).toISODate()
+  const startDateFormatted = DateTime.fromJSDate(
+    filters.dateRange[0]
+  ).toISODate()
   const endDateFormatted = DateTime.fromJSDate(filters.dateRange[1]).toISODate()
   const filename = `ridership_data_${startDateFormatted}_to_${endDateFormatted}.csv`
 
@@ -218,25 +220,30 @@ const ResultsTable = ({ ridershipData, filters }) => {
             enabled: true,
             limit: 100,
           }}
-          height='500px'
+          height="500px"
           fixedHeader={true}
           style={{
             th: {
-              padding: '8px 10px'
+              padding: '8px 10px',
             },
             td: {
-              padding: '5px 10px'
-            }
+              padding: '5px 10px',
+            },
           }}
         />
       </div>
-      
+
       <CSVLink
         data={ridershipData}
-        headers={columns.map(column => ({ label: column.name, key: column.id }))}
+        headers={columns.map((column) => ({
+          label: column.name,
+          key: column.id,
+        }))}
         filename={filename}
         className="btn-blue my-2 inline-block"
-      >⬇️ Download CSV</CSVLink>
+      >
+        ⬇️ Download CSV
+      </CSVLink>
     </>
   )
 }

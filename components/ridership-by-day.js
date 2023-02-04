@@ -19,8 +19,16 @@ ChartJS.register(
   Legend
 )
 
-import { formatAlightingLabel, formatBoardingLabel, formatYAxisLabel } from '../lib/formatters.js'
-import { chartColors, getBoardingFieldName, getAlightingFieldName } from '../lib/utils.js'
+import {
+  formatAlightingLabel,
+  formatBoardingLabel,
+  formatYAxisLabel,
+} from '../lib/formatters.js'
+import {
+  chartColors,
+  getBoardingFieldName,
+  getAlightingFieldName,
+} from '../lib/utils.js'
 
 const RidershipByDay = ({ ridershipData, type }) => {
   if (!ridershipData || ridershipData.length === 0) {
@@ -31,32 +39,38 @@ const RidershipByDay = ({ ridershipData, type }) => {
   const alightingField = getAlightingFieldName(type)
 
   const data = {
-    labels: ridershipData.map(item => item.label),
-    datasets: [{
-      label: formatBoardingLabel(type),
-      backgroundColor: chartColors.boarding,
-      borderColor: chartColors.boarding,
-      data: ridershipData.map(item => item[boardingField]),
-      lineTension: 0,
-      fill: false,
-      yAxisID: 'yAxis',
-    }, {
-      label: formatAlightingLabel(type),
-      backgroundColor: chartColors.alighting,
-      borderColor: chartColors.alighting,
-      data: ridershipData.map(item => item[alightingField]),
-      lineTension: 0,
-      fill: false,
-      yAxisID: 'yAxis',
-    }]
+    labels: ridershipData.map((item) => item.label),
+    datasets: [
+      {
+        label: formatBoardingLabel(type),
+        backgroundColor: chartColors.boarding,
+        borderColor: chartColors.boarding,
+        data: ridershipData.map((item) => item[boardingField]),
+        lineTension: 0,
+        fill: false,
+        yAxisID: 'yAxis',
+      },
+      {
+        label: formatAlightingLabel(type),
+        backgroundColor: chartColors.alighting,
+        borderColor: chartColors.alighting,
+        data: ridershipData.map((item) => item[alightingField]),
+        lineTension: 0,
+        fill: false,
+        yAxisID: 'yAxis',
+      },
+    ],
   }
 
-  if (type === 'passengers' && ridershipData.some(item => item.load_type !== null)) {
+  if (
+    type === 'passengers' &&
+    ridershipData.some((item) => item.load_type !== null)
+  ) {
     data.datasets.push({
       label: 'Average Load Count',
       backgroundColor: chartColors.load_count,
       borderColor: chartColors.load_count,
-      data: ridershipData.map(item => item.average_load_count),
+      data: ridershipData.map((item) => item.average_load_count),
       lineTension: 0,
       fill: false,
       yAxisID: 'yAxis',
@@ -67,32 +81,32 @@ const RidershipByDay = ({ ridershipData, type }) => {
     responsive: true,
     title: {
       display: true,
-      text: 'Ridership'
+      text: 'Ridership',
     },
     tooltips: {
       mode: 'index',
-      intersect: false
+      intersect: false,
     },
     hover: {
       mode: 'nearest',
-      intersect: true
+      intersect: true,
     },
     scales: {
       x: {
         display: true,
         scaleLabel: {
           display: true,
-          labelString: 'Date'
-        }
+          labelString: 'Date',
+        },
       },
       yAxis: {
         display: true,
         scaleLabel: {
           display: true,
-          labelString: formatYAxisLabel(type)
-        }
-      }
-    }
+          labelString: formatYAxisLabel(type),
+        },
+      },
+    },
   }
 
   return <Line data={data} options={options} />
