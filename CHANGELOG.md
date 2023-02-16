@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Readme updates
 - Dependency updates
 - Lints
-- Updates to Chartjs, React-chartjs-2 and node GTFS libraries
+- Updates to Chartjs, React-chartjs-2, reactmapgl and node GTFS libraries
 
 ## [0.2.0] - 2021-09-22
 

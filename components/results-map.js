@@ -380,11 +380,15 @@ const ResultsMap = ({ ridershipData, type, filters }) => {
       />
       <ReactMapGL
         {...viewport}
-        width="100%"
+        style={{
+          width: '100%',
+          height: '400px',
+        }}
         onViewportChange={(nextViewport) => setViewport(nextViewport)}
-        mapboxApiAccessToken={
+        mapboxAccessToken={
           process.env.NEXT_PUBLIC_REACT_APP_MAPBOX_ACCESS_TOKEN
         }
+        mapStyle="mapbox://styles/mapbox/light-v9"
         scrollZoom={false}
       >
         <NavigationControl style={{ right: 10, top: 10 }} />
