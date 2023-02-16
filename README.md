@@ -8,13 +8,13 @@ It is built with [next.js](https://nextjs.org).
 
 The app supports graphing, mapping, aggregating and exporting data as CSV format. Ridership data can be grouped by:
 
-* Route
-* Day
-* Day of Week
-* Weekday vs Sat vs Sun
-* Time of day
-* Trip
-* Stop
+- Route
+- Day
+- Day of Week
+- Weekday vs Sat vs Sun
+- Time of day
+- Trip
+- Stop
 
 <img width="971" alt="" src="https://user-images.githubusercontent.com/96217/134409974-54f7dd25-cbc8-474d-b997-cdfc6218788b.png">
 >
@@ -41,9 +41,9 @@ Create a `.env` file based off of `.env-example`
 
 Add values for `SQLITE_PATH` and `NEXT_PUBLIC_REACT_APP_MAPBOX_ACCESS_TOKEN`.
 
-`SQLITE_PATH` should be the path to a SQLite file of imported GTFS-Ride data, created using [node-gtfs-ride](https://github.com/ODOT-PTS/node-gtfs-ride).  For example, `~/Documents/sqlite/gtfs-ride`.
+`SQLITE_PATH` should be the path to a SQLite file of imported GTFS-Ride data, created using [node-gtfs-ride](https://github.com/ODOT-PTS/node-gtfs-ride). For example, `~/Documents/sqlite/gtfs-ride`.
 
-`NEXT_PUBLIC_REACT_APP_MAPBOX_ACCESS_TOKEN` should be a mapbox access token for use in generating maps. [Signup and get a free Mapbox account](https://docs.mapbox.com/help/getting-started/access-tokens/) and generate an access token. 
+`NEXT_PUBLIC_REACT_APP_MAPBOX_ACCESS_TOKEN` should be a mapbox access token for use in generating maps. [Signup and get a free Mapbox account](https://docs.mapbox.com/help/getting-started/access-tokens/) and generate an access token.
 
 ## Import Data
 
@@ -77,8 +77,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to use the
 
 ## Running in production
 
-    pm2 start server.mjs
-
-If more memory is needed for dealing with larger GTFS-Ride datasets:
-
-    pm2 start server.mjs --node-args="--max-old-space-size=6144"
+    pm2 npm run start

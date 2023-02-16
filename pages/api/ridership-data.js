@@ -1,4 +1,4 @@
-import { queryRidershipData } from '../../lib/api.mjs'
+import { queryRidershipData } from '../../lib/api.js'
 
 export default async function handler(req, res) {
   try {

@@ -8,7 +8,7 @@ import {
   queryAgencies,
   queryRidershipDateRange,
   queryRoutesAndDirections,
-} from '../lib/api.mjs'
+} from '../lib/api.js'
 
 import { formatAgencyName } from '../lib/formatters.js'
 

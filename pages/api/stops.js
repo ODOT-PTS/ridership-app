@@ -1,4 +1,4 @@
-import { queryStops } from '../../lib/api.mjs'
+import { queryStops } from '../../lib/api.js'
 
 export default async function handler(req, res) {
   try {

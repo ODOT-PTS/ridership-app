@@ -1,7 +1,7 @@
 {
   "name": "ridership-app",
   "description": "Visualize and explore transit ridership data from GTFS-Ride.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "keywords": [
     "transit",
@@ -19,9 +19,9 @@
     "url": "git://github.com/ODOT-PTS/ridership-app.git"
   },
   "scripts": {
-    "dev": "node server.mjs",
+    "dev": "next dev",
     "build": "next build",
-    "start": "NODE_ENV=production node server.mjs",
+    "start": "next start",
     "lint": "next lint",
     "prepare": "husky install"
   },
