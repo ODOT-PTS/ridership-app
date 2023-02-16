@@ -1,11 +1,14 @@
 import dotenv from 'dotenv'
-import untildify from 'untildify'
-
 import express from 'express'
 import next from 'next'
-import { openDb } from 'gtfs'
 
-import { queryAgencies, queryStops, queryRidershipData, queryRidershipDateRange, queryRoutesAndDirections } from './lib/api.mjs'
+import {
+  queryAgencies,
+  queryStops,
+  queryRidershipData,
+  queryRidershipDateRange,
+  queryRoutesAndDirections,
+} from './lib/api.mjs'
 
 dotenv.config()
 
@@ -14,14 +17,12 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-app.prepare().then(async () => {
+app.prepare().then(() => {
   const server = express()
 
-  const db = await openDb({ sqlitePath: untildify(process.env.SQLITE_PATH) })
-
-  server.get('/agencies', async (req, res) => {
+  server.get('/agencies', (req, res) => {
     try {
-      const agencies = await queryAgencies()
+      const agencies = queryAgencies()
       res.json(agencies)
     } catch (error) {
       console.error(error)
@@ -29,9 +30,9 @@ app.prepare().then(async () => {
     }
   })
 
-  server.get('/routes', async (req, res) => {
+  server.get('/routes', (req, res) => {
     try {
-      const routes = await queryRoutesAndDirections()
+      const routes = queryRoutesAndDirections()
       res.json(routes)
     } catch (error) {
       console.error(error)
@@ -39,9 +40,9 @@ app.prepare().then(async () => {
     }
   })
 
-  server.get('/boardalight-date-range', async (req, res) => {
+  server.get('/boardalight-date-range', (req, res) => {
     try {
-      const dateRange = await queryRidershipDateRange()
+      const dateRange = queryRidershipDateRange()
       res.json(dateRange)
     } catch (error) {
       console.error(error)
@@ -49,9 +50,9 @@ app.prepare().then(async () => {
     }
   })
 
-  server.get('/stops', async (req, res) => {
+  server.get('/stops', (req, res) => {
     try {
-      const stops = await queryStops(req.query)
+      const stops = queryStops(req.query)
       res.json(stops)
     } catch (error) {
       console.error(error)
@@ -59,9 +60,9 @@ app.prepare().then(async () => {
     }
   })
 
-  server.get('/ridership-data', async (req, res) => {
+  server.get('/ridership-data', (req, res) => {
     try {
-      const ridershipData = await queryRidershipData(req.query)
+      const ridershipData = queryRidershipData(req.query)
       res.json(ridershipData)
     } catch (error) {
       console.error(error)
