@@ -4,6 +4,12 @@ import { DateTime } from 'luxon'
 
 import styles from '../styles/Home.module.css'
 
+import {
+  queryAgencies,
+  queryRidershipDateRange,
+  queryRoutesAndDirections,
+} from '../lib/api.mjs'
+
 import { formatAgencyName } from '../lib/formatters.js'
 
 import Filters from '../components/filters.js'
@@ -11,29 +17,10 @@ import Loading from '../components/loading.js'
 import Results from '../components/results.js'
 import Footer from '../components/footer'
 
-export default function Home() {
+export default function Home({ agencies, routes, ridershipDateRange }) {
   const [appliedFilters, setAppliedFilters] = useState()
   const [ridershipData, setRidershipData] = useState()
-  const [agencyName, setAgencyName] = useState()
   const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    const fetchAgencies = async () => {
-      try {
-        const response = await fetch('/agencies')
-
-        if (response.ok) {
-          const data = await response.json()
-          setAgencyName(formatAgencyName(data))
-        } else {
-          throw new Error('Bad request')
-        }
-      } catch (error) {
-        console.warn(error)
-      }
-    }
-    fetchAgencies()
-  }, [])
 
   const validationError = (message) => {
     alert(message)
@@ -65,7 +52,7 @@ export default function Home() {
       }
 
       const response = await fetch(
-        '/ridership-data?' + new URLSearchParams(parameters)
+        `/api/ridership-data?${new URLSearchParams(parameters)}`
       )
 
       if (response.ok) {
@@ -83,15 +70,21 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{agencyName} Ridership Visualization</title>
+        <title>{`${formatAgencyName(agencies)} Ridership Visualization`}</title>
         <meta name="description" content="Ridership App for GTFS-Ride data" />
       </Head>
 
       <main className="container mx-auto justify-center mb-5">
         <div className="flex">
           <div className="self-start flex-shrink-0 grid grid-cols-1 gap-2 w-72 px-3">
-            <h1 className={styles.title}>{agencyName} Ridership</h1>
-            <Filters visualize={visualize} />
+            <h1 className={styles.title}>
+              {formatAgencyName(agencies)} Ridership
+            </h1>
+            <Filters
+              visualize={visualize}
+              routes={routes}
+              ridershipDateRange={ridershipDateRange}
+            />
           </div>
           <div className="ml-5 mt-2" style={{ width: 'calc(100% - 320px)' }}>
             <Loading loading={loading} />
@@ -103,4 +96,18 @@ export default function Home() {
       <Footer />
     </div>
   )
+}
+
+export function getServerSideProps() {
+  const agencies = queryAgencies()
+  const routes = queryRoutesAndDirections()
+  const ridershipDateRange = queryRidershipDateRange()
+
+  return {
+    props: {
+      agencies,
+      routes,
+      ridershipDateRange,
+    },
+  }
 }

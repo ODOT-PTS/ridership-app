@@ -6,15 +6,26 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 import { formatDirectionName, formatRouteName } from '../lib/formatters.js'
 
-const Filters = ({ visualize }) => {
-  const [routes, setRoutes] = useState()
+const Filters = ({ visualize, routes, ridershipDateRange }) => {
   const [stops, setStops] = useState()
-  const [availableDateRange, setAvailableDateRange] = useState([])
+  const initialDateRange =
+    ridershipDateRange.length > 0
+      ? [
+          DateTime.fromFormat(
+            ridershipDateRange[0].toString(),
+            'yyyyMMdd'
+          ).toJSDate(),
+          DateTime.fromFormat(
+            ridershipDateRange[1].toString(),
+            'yyyyMMdd'
+          ).toJSDate(),
+        ]
+      : [
+          DateTime.now().minus({ months: 3 }).toJSDate(),
+          DateTime.now().minus({ days: 1 }).toJSDate(),
+        ]
   const [filters, setFilters] = useState({
-    dateRange: [
-      DateTime.now().minus({ months: 3 }).toJSDate(),
-      DateTime.now().minus({ days: 1 }).toJSDate(),
-    ],
+    dateRange: initialDateRange,
     routeId: 'all',
     directionId: 'all',
     stopId: 'all',
@@ -23,73 +34,10 @@ const Filters = ({ visualize }) => {
   })
 
   useEffect(() => {
-    const fetchRoutes = async () => {
-      // Get a list of all routes with at least one trip
-      try {
-        const response = await fetch('/routes')
-
-        if (response.ok) {
-          const data = await response.json()
-          setRoutes(data)
-        } else {
-          throw new Error('Bad request')
-        }
-      } catch (error) {
-        console.warn(error)
-      }
-    }
-
-    const fetchBoardAlights = async () => {
-      // Get the max date range for board/alight data
-      try {
-        const response = await fetch('/boardalight-date-range')
-
-        if (response.ok) {
-          const data = await response.json()
-          if (!data) {
-            return
-          }
-
-          setFilters((filters) => ({
-            ...filters,
-            dateRange: [
-              DateTime.fromFormat(
-                data.start_date.toString(),
-                'yyyyMMdd'
-              ).toJSDate(),
-              DateTime.fromFormat(
-                data.end_date.toString(),
-                'yyyyMMdd'
-              ).toJSDate(),
-            ],
-          }))
-          setAvailableDateRange([
-            DateTime.fromFormat(
-              data.start_date.toString(),
-              'yyyyMMdd'
-            ).toISODate(),
-            DateTime.fromFormat(
-              data.end_date.toString(),
-              'yyyyMMdd'
-            ).toISODate(),
-          ])
-        } else {
-          throw new Error('Bad request')
-        }
-      } catch (error) {
-        console.warn(error)
-      }
-    }
-
-    fetchRoutes()
-    fetchBoardAlights()
-  }, [])
-
-  useEffect(() => {
     const fetchStops = async () => {
       try {
         const response = await fetch(
-          `/stops?route_id=${filters.routeId}&direction_id=${filters.directionId}`
+          `/api/stops?route_id=${filters.routeId}&direction_id=${filters.directionId}`
         )
 
         if (response.ok) {
@@ -141,9 +89,18 @@ const Filters = ({ visualize }) => {
 
   return (
     <>
-      {availableDateRange.length > 0 && (
+      {ridershipDateRange.length > 0 && (
         <div className="py-2 px-3 bg-blue-100 border border-gray-300 rounded-sm leading-none">
-          Data available {availableDateRange[0]} through {availableDateRange[1]}
+          Data available{' '}
+          {DateTime.fromFormat(
+            ridershipDateRange[0].toString(),
+            'yyyyMMdd'
+          ).toISODate()}{' '}
+          through{' '}
+          {DateTime.fromFormat(
+            ridershipDateRange[1].toString(),
+            'yyyyMMdd'
+          ).toISODate()}
         </div>
       )}
       <div className="flex">
