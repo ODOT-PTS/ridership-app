@@ -77,4 +77,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to use the
 
 ## Running in production
 
-    pm2 npm run start
+    pm2 start npm --name "ridership" -- start

@@ -21,7 +21,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "[ -e .env ] && set -a && . ./.env; next start",
     "lint": "next lint",
     "prepare": "husky install"
   },
