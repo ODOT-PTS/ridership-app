@@ -31,6 +31,7 @@ const Filters = ({ visualize, routes, ridershipDateRange }) => {
     stopId: 'all',
     grouping: 'route',
     timeBucketSize: '60',
+    dayOfWeekType: 'all',
   })
 
   useEffect(() => {
@@ -149,6 +150,10 @@ const Filters = ({ visualize, routes, ridershipDateRange }) => {
               newFilters.stopId = 'all'
             } else if (event.target.value === 'stop') {
               newFilters.stopId = 'all'
+            } else if (event.target.value === 'day-of-week') {
+              newFilters.dayOfWeekType = 'all'
+            } else if (event.target.value === 'day-of-week-type') {
+              newFilters.dayOfWeekType = 'all'
             }
 
             setFilters(newFilters)
@@ -273,6 +278,27 @@ const Filters = ({ visualize, routes, ridershipDateRange }) => {
           </select>
         </label>
       )}
+
+      {filters.grouping !== 'day-of-week' &&
+        filters.grouping !== 'day-of-week-type' && (
+          <label className="block">
+            <span className="text-gray-700">Day of Week Type</span>
+            <select
+              className="mt-1 block w-full"
+              onChange={(event) =>
+                setFilters({
+                  ...filters,
+                  dayOfWeekType: event.target.value,
+                })
+              }
+            >
+              <option value="all">All</option>
+              <option value="Weekday">Weekday</option>
+              <option value="Saturday">Saturday</option>
+              <option value="Sunday">Sunday</option>
+            </select>
+          </label>
+        )}
 
       <button className="btn-blue mt-3" onClick={() => visualize(filters)}>
         📈 Visualize

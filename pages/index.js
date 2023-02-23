@@ -48,6 +48,7 @@ export default function Home({ agencies, routes, ridershipDateRange }) {
         direction_id: filters.directionId,
         stop_id: filters.stopId,
         grouping: filters.grouping,
+        day_of_week_type: filters.dayOfWeekType,
         time_bucket_size: filters.timeBucketSize,
       }
 
