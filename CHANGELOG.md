@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Changed
 
 - Move to serverless
+- Use average daily ridership for day of week
+
+## Added
+
+- Add Day of Week Type filter
 
 ### Updates
 
