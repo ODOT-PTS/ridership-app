@@ -1,8 +1,9 @@
-import DatePicker from 'react-datepicker'
+import DatePicker from 'react-date-picker'
 import { useState, useEffect } from 'react'
 import { DateTime } from 'luxon'
 
-import 'react-datepicker/dist/react-datepicker.css'
+import 'react-date-picker/dist/DatePicker.css'
+import 'react-calendar/dist/Calendar.css'
 
 import { formatDirectionName, formatRouteName } from '../lib/formatters.js'
 
@@ -13,11 +14,11 @@ const Filters = ({ visualize, routes, ridershipDateRange }) => {
       ? [
           DateTime.fromFormat(
             ridershipDateRange[0].toString(),
-            'yyyyMMdd'
+            'yyyyMMdd',
           ).toJSDate(),
           DateTime.fromFormat(
             ridershipDateRange[1].toString(),
-            'yyyyMMdd'
+            'yyyyMMdd',
           ).toJSDate(),
         ]
       : [
@@ -38,7 +39,7 @@ const Filters = ({ visualize, routes, ridershipDateRange }) => {
     const fetchStops = async () => {
       try {
         const response = await fetch(
-          `/api/stops?route_id=${filters.routeId}&direction_id=${filters.directionId}`
+          `/api/stops?route_id=${filters.routeId}&direction_id=${filters.directionId}`,
         )
 
         if (response.ok) {
@@ -70,7 +71,7 @@ const Filters = ({ visualize, routes, ridershipDateRange }) => {
       directionOptions.push(
         <option value="all" key="all">
           Both
-        </option>
+        </option>,
       )
     }
 
@@ -81,7 +82,7 @@ const Filters = ({ visualize, routes, ridershipDateRange }) => {
           key={direction.direction_id}
         >
           {formatDirectionName(direction)}
-        </option>
+        </option>,
       )
     }
 
@@ -95,12 +96,12 @@ const Filters = ({ visualize, routes, ridershipDateRange }) => {
           Data available{' '}
           {DateTime.fromFormat(
             ridershipDateRange[0].toString(),
-            'yyyyMMdd'
+            'yyyyMMdd',
           ).toISODate()}{' '}
           through{' '}
           {DateTime.fromFormat(
             ridershipDateRange[1].toString(),
-            'yyyyMMdd'
+            'yyyyMMdd',
           ).toISODate()}
         </div>
       )}
@@ -110,13 +111,13 @@ const Filters = ({ visualize, routes, ridershipDateRange }) => {
 
           <div className="mt-1 block">
             <DatePicker
-              selected={filters.dateRange[0]}
+              value={filters.dateRange[0]}
               onChange={(date) => {
                 const dateRange = [date, filters.dateRange[1]]
                 setFilters({ ...filters, dateRange })
               }}
-              wrapperClassName="w-full"
               className="w-full border-r-0"
+              clearIcon={null}
             />
           </div>
         </label>
@@ -125,13 +126,14 @@ const Filters = ({ visualize, routes, ridershipDateRange }) => {
 
           <div className="mt-1 block">
             <DatePicker
-              selected={filters.dateRange[1]}
+              value={filters.dateRange[1]}
               onChange={(date) => {
                 const dateRange = [filters.dateRange[0], date]
                 setFilters({ ...filters, dateRange })
               }}
-              wrapperClassName="w-full"
               className="w-full"
+              maxDate={DateTime.now().toJSDate()}
+              clearIcon={null}
             />
           </div>
         </label>
