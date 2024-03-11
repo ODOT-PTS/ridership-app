@@ -7,7 +7,7 @@ import ReactMapGL, {
   Source,
 } from 'react-map-gl'
 import WebMercatorViewport from 'viewport-mercator-project'
-import { compact, maxBy, minBy, startCase } from 'lodash'
+import { compact, maxBy, minBy } from 'lodash'
 import Gradient from 'javascript-color-gradient'
 
 import ToggleMenu from './toggle-menu.js'
@@ -38,7 +38,7 @@ function sizePin(value, maxValue) {
   const minPinSize = 4
 
   return Math.round(
-    ((value || 0) / maxValue) * (maxPinSize - minPinSize) + minPinSize
+    ((value || 0) / maxValue) * (maxPinSize - minPinSize) + minPinSize,
   )
 }
 
@@ -49,7 +49,7 @@ const Pins = ({ ridershipData, setPopupInfo, mapField, type }) => {
     mapField === 'boardings' ? boardingFieldName : alightingFieldName
   const maxValue = Math.max(
     ...compact(ridershipData.map((item) => item[boardingFieldName])),
-    ...compact(ridershipData.map((item) => item[alightingFieldName]))
+    ...compact(ridershipData.map((item) => item[alightingFieldName])),
   )
   const colorGradient = new Gradient()
   colorGradient.setColorGradient('#F4B543', '#E94246', '#5C1B91')
@@ -138,7 +138,7 @@ const Line = ({ ridershipData, setPopupInfo }) => {
   // Assign Line width into 5 buckets
   const buckets = divideIntoBuckets(
     features.map((feature) => feature.properties.loadCount),
-    5
+    5,
   )
   const loadCountColorGradient = new Gradient()
   loadCountColorGradient.setColorGradient('#F4B543', '#E94246', '#5C1B91')
@@ -152,7 +152,7 @@ const Line = ({ ridershipData, setPopupInfo }) => {
     const bucket = buckets.find(
       (bucket) =>
         bucket.min <= feature.properties.loadCount &&
-        bucket.max > feature.properties.loadCount
+        bucket.max > feature.properties.loadCount,
     )
     feature.properties = {
       ...feature.properties,
@@ -322,10 +322,9 @@ const ResultsMap = ({ ridershipData, type, filters }) => {
     filters.directionId !== 'all' &&
     ridershipData.some((item) => item.load_type !== null)
 
-  const [viewport, setViewport] = useState(bounds)
   const [popupInfo, setPopupInfo] = useState(null)
   const [mapField, setMapField] = useState(
-    viewSupportsLoadCounts ? 'loadCounts' : 'boardings'
+    viewSupportsLoadCounts ? 'loadCounts' : 'boardings',
   )
 
   useEffect(() => {
@@ -379,12 +378,11 @@ const ResultsMap = ({ ridershipData, type, filters }) => {
         setField={setMapField}
       />
       <ReactMapGL
-        {...viewport}
         style={{
           width: '100%',
           height: '400px',
         }}
-        onViewportChange={(nextViewport) => setViewport(nextViewport)}
+        initialViewState={bounds}
         mapboxAccessToken={
           process.env.NEXT_PUBLIC_REACT_APP_MAPBOX_ACCESS_TOKEN
         }
