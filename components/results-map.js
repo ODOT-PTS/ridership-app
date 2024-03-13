@@ -294,8 +294,8 @@ const MapPopup = ({ popupInfo, setPopupInfo }) => {
 
             return (
               <tr key={field.key}>
-                <td className="px-1 whitespace-nowrap">{field.name}</td>
-                <td className="px-1 whitespace-nowrap text-right font-bold">
+                <td className="px-1">{field.name}</td>
+                <td className="px-1 text-right font-bold">
                   {formatNumber(popupInfo[field.key])}
                 </td>
               </tr>
