@@ -281,30 +281,28 @@ const MapPopup = ({ popupInfo, setPopupInfo }) => {
       offsetLeft={0}
       offsetTop={-popupInfo.size / 2}
     >
-      <div className="px-3">
-        <div className="font-bold mb-2">{popupInfo.label}</div>
-        <table className="min-w-full divide-y divide-gray-200 border-t border-b border-gray-200">
-          <tbody className="bg-white divide-y divide-gray-200">
-            {fields.map((field) => {
-              if (
-                popupInfo[field.key] === null ||
-                popupInfo[field.key] === undefined
-              ) {
-                return null
-              }
+      <div className="font-bold mb-2">{popupInfo.label}</div>
+      <table className="min-w-full divide-y divide-gray-200 border-t border-b border-gray-200">
+        <tbody className="bg-white divide-y divide-gray-200">
+          {fields.map((field) => {
+            if (
+              popupInfo[field.key] === null ||
+              popupInfo[field.key] === undefined
+            ) {
+              return null
+            }
 
-              return (
-                <tr key={field.key}>
-                  <td className="px-3 pl-1 whitespace-nowrap">{field.name}</td>
-                  <td className="px-3 pr-1 whitespace-nowrap text-right font-bold">
-                    {formatNumber(popupInfo[field.key])}
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
+            return (
+              <tr key={field.key}>
+                <td className="px-1 whitespace-nowrap">{field.name}</td>
+                <td className="px-1 whitespace-nowrap text-right font-bold">
+                  {formatNumber(popupInfo[field.key])}
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
     </Popup>
   )
 }
