@@ -277,7 +277,7 @@ const MapPopup = ({ popupInfo, setPopupInfo }) => {
       longitude={popupInfo.stop_lon}
       latitude={popupInfo.stop_lat}
       closeOnClick={false}
-      onClose={setPopupInfo}
+      onClose={() => setPopupInfo()}
       offsetLeft={0}
       offsetTop={-popupInfo.size / 2}
     >
