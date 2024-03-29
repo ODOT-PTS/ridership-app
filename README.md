@@ -35,21 +35,29 @@ Install dependencies:
 
 ## Configuration
 
-Create a `.env` file based off of `.env-example`
+Create a `config.json` file based off of `config-example.json`
 
-    cp .env-example .env
+    cp config-example.json config.json
 
-Add values for `SQLITE_PATH` and `NEXT_PUBLIC_REACT_APP_MAPBOX_ACCESS_TOKEN`.
+Add values for `databases` and `mapboxAccessToken`.
 
-`SQLITE_PATH` should be the path to a SQLite file of imported GTFS-Ride data, created using [node-gtfs-ride](https://github.com/ODOT-PTS/node-gtfs-ride). For example, `~/Documents/sqlite/gtfs-ride`.
+`databases` should be an array of objects that contain the path to a SQLite file of imported GTFS-Ride data, created using [node-gtfs-ride](https://github.com/ODOT-PTS/node-gtfs-ride). For example, 
 
-`NEXT_PUBLIC_REACT_APP_MAPBOX_ACCESS_TOKEN` should be a mapbox access token for use in generating maps. [Signup and get a free Mapbox account](https://docs.mapbox.com/help/getting-started/access-tokens/) and generate an access token.
+```json
+{
+    "sqlitePath": "~/Documents/sqlite/gtfs-ride",
+    "startDate": "2024-02-01",
+    "endDate": "2024-02-25"
+}
+```
+
+`mapboxAccessToken` should be a mapbox access token for use in generating maps. [Signup and get a free Mapbox account](https://docs.mapbox.com/help/getting-started/access-tokens/) and generate an access token.
 
 ## Import Data
 
 Import GTFS Ride data to be visualized into a sqlite database. You can use the [node-gtfs-ride](https://github.com/ODOT-PTS/node-gtfs-ride) tool to create GTFS ride data or the [node-gtfs] tool to import existing GTFS ride data.
 
-When importing, be sure to use the same `SQLITE_PATH` to the local database.
+When importing, be sure to use the same path to the local database.
 
 ### Create GTFS-Ride data with `node-gtfs-ride`
 

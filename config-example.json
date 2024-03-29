@@ -1,0 +1,16 @@
+{
+  "databases": [
+    {
+      "sqlitePath": "data/20240201",
+      "startDate": "2024-02-01",
+      "endDate": "2024-02-25"
+    },
+    {
+      "sqlitePath": "data/20240226",
+      "startDate": "2024-02-26",
+      "endDate": "2024-02-29"
+    }
+  ],
+  "port": 3000,
+  "mapboxAccessToken": "YOUR_MAPBOX_ACCESS_TOKEN"
+}

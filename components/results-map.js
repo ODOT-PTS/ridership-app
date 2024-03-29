@@ -12,6 +12,8 @@ import Gradient from 'javascript-color-gradient'
 
 import ToggleMenu from './toggle-menu.js'
 
+import config from '../config.json'
+
 import { divideIntoBuckets, formatNumber } from '../lib/formatters.js'
 import { getAlightingFieldName, getBoardingFieldName } from '../lib/utils.js'
 
@@ -381,9 +383,7 @@ const ResultsMap = ({ ridershipData, type, filters }) => {
           height: '400px',
         }}
         initialViewState={bounds}
-        mapboxAccessToken={
-          process.env.NEXT_PUBLIC_REACT_APP_MAPBOX_ACCESS_TOKEN
-        }
+        mapboxAccessToken={config.mapboxAccessToken}
         mapStyle="mapbox://styles/mapbox/light-v9"
         scrollZoom={false}
       >
