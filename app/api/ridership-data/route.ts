@@ -19,6 +19,7 @@ export  async function GET(request: NextRequest) {
       end_date: searchParams.get('end_date'),
       grouping: searchParams.get('grouping'),
       day_of_week_type: searchParams.get('day_of_week_type'),
+      time_bucket_size: searchParams.get('time_bucket_size'),
     })
     return NextResponse.json(ridershipData)
   } catch (error) {
