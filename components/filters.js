@@ -242,7 +242,17 @@ const Filters = ({ visualize, clearVisualization }) => {
               <span className="text-gray-700">Route</span>
               <select
                 className="mt-1 block w-full"
-                onChange={(event) =>
+                onChange={(event) => {
+                  // If only one direction, set directionId to that direction
+                  let directionId = 'all'
+                  const route = routes.find(
+                    (route) => route.route_id === event.target.value,
+                  )
+
+                  if (route?.directions.length === 1) {
+                    directionId = route.directions[0].direction_id.toString()
+                  }
+
                   setFilters({
                     ...filters,
                     routeId: event.target.value,
@@ -252,10 +262,10 @@ const Filters = ({ visualize, clearVisualization }) => {
                             event.nativeEvent.target.selectedIndex
                           ].text
                         : '',
-                    directionId: 'all',
+                    directionId,
                     stopId: 'all',
                   })
-                }
+                }}
                 value={filters.routeId}
               >
                 <option value="all">All</option>
