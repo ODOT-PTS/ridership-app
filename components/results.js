@@ -10,6 +10,7 @@ import RidershipByRoute from './ridership-by-route.js'
 import RidershipByTimeOfDay from './ridership-by-time-of-day.js'
 import RidershipByTrip from './ridership-by-trip.js'
 import RidershipByStop from './ridership-by-stop.js'
+import RidershipRouteChart from './ridership-route-chart.js'
 import ToggleMenu from './toggle-menu.js'
 
 const Results = ({ ridershipData, filters }) => {
@@ -139,6 +140,11 @@ const Results = ({ ridershipData, filters }) => {
       {filters.grouping === 'stop' && (
         <>
           <RidershipByStop ridershipData={ridershipData} type={type} />
+          <RidershipRouteChart
+            ridershipData={ridershipData}
+            type={type}
+            filters={filters}
+          />
           <ResultsMap
             ridershipData={ridershipData}
             type={type}
