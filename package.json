@@ -23,7 +23,7 @@
     "build": "next build",
     "start": "[ -e .env ] && set -a && . ./.env; next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.7",
@@ -32,13 +32,13 @@
     "express": "^4.19.2",
     "gridjs": "^6.2.0",
     "gridjs-react": "^6.1.1",
-    "gtfs": "^4.11.0",
-    "javascript-color-gradient": "^2.4.4",
+    "gtfs": "^4.13.4",
+    "javascript-color-gradient": "^2.5.0",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
-    "luxon": "^3.4.4",
-    "mapbox-gl": "^3.4.0",
-    "next": "14.2.3",
+    "luxon": "^3.5.0",
+    "mapbox-gl": "^3.5.2",
+    "next": "14.2.5",
     "pluralize": "^8.0.0",
     "react": "18.3.1",
     "react-chartjs-2": "^5.2.0",
@@ -52,14 +52,14 @@
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
-    "autoprefixer": "^10.4.19",
+    "autoprefixer": "^10.4.20",
     "eslint": "^8.57.0",
-    "eslint-config-next": "^14.2.3",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.5",
-    "postcss": "^8.4.38",
-    "prettier": "^3.3.1",
-    "tailwindcss": "^3.4.4"
+    "eslint-config-next": "^14.2.5",
+    "husky": "^9.1.4",
+    "lint-staged": "^15.2.9",
+    "postcss": "^8.4.41",
+    "prettier": "^3.3.3",
+    "tailwindcss": "^3.4.10"
   },
   "prettier": {
     "singleQuote": true,
