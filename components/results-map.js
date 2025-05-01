@@ -5,14 +5,12 @@ import ReactMapGL, {
   NavigationControl,
   Popup,
   Source,
-} from 'react-map-gl'
+} from 'react-map-gl/maplibre'
 import WebMercatorViewport from 'viewport-mercator-project'
 import { compact, maxBy, minBy } from 'lodash'
 import Gradient from 'javascript-color-gradient'
 
 import ToggleMenu from './toggle-menu.js'
-
-import config from '../config.json'
 
 import { divideIntoBuckets, formatNumber } from '../lib/formatters.js'
 import { getAlightingFieldName, getBoardingFieldName } from '../lib/utils.js'
@@ -219,7 +217,7 @@ const Line = ({ ridershipData, setPopupInfo }) => {
           </Marker>
         )
       })}
-      <div className="absolute bottom-8 right-2 bg-white px-3 py-1 rounded-md">
+      <div className="absolute bottom-2 left-2 bg-white px-3 pt-1 pb-2 rounded-md">
         <strong>Average Load Count</strong>
         {buckets.map((bucket) => (
           <div className="pl-2 flex items-center" key={bucket.min}>
@@ -383,8 +381,7 @@ const ResultsMap = ({ ridershipData, type, filters }) => {
           height: '400px',
         }}
         initialViewState={bounds}
-        mapboxAccessToken={config.mapboxAccessToken}
-        mapStyle="mapbox://styles/mapbox/light-v9"
+        mapStyle="https://tiles.openfreemap.org/styles/liberty"
         scrollZoom={false}
       >
         <NavigationControl style={{ right: 10, top: 10 }} />

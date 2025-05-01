@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google'
 
-import 'mapbox-gl/dist/mapbox-gl.css'
+import 'maplibre-gl/dist/maplibre-gl.css'
 import "@/styles/globals.css"
 
 const inter = Inter({

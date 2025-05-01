@@ -11,6 +11,5 @@
       "endDate": "2024-02-29"
     }
   ],
-  "port": 3000,
-  "mapboxAccessToken": "YOUR_MAPBOX_ACCESS_TOKEN"
+  "port": 3000
 }

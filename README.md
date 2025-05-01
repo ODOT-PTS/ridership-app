@@ -39,7 +39,7 @@ Create a `config.json` file based off of `config-example.json`
 
     cp config-example.json config.json
 
-Add values for `databases` and `mapboxAccessToken`.
+Add values for `databases`.
 
 `databases` should be an array of objects that contain the path to a SQLite file of imported GTFS-Ride data, created using [node-gtfs-ride](https://github.com/ODOT-PTS/node-gtfs-ride). For example, 
 
@@ -50,8 +50,6 @@ Add values for `databases` and `mapboxAccessToken`.
     "endDate": "2024-02-25"
 }
 ```
-
-`mapboxAccessToken` should be a mapbox access token for use in generating maps. [Signup and get a free Mapbox account](https://docs.mapbox.com/help/getting-started/access-tokens/) and generate an access token.
 
 ## Import Data
 
