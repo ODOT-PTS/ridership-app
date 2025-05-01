@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Updated
+
+- Dependency updates
+- Use Open freemap
+
+## Fixed
+
+- Better support for routes with only one direction
+
+## [0.3.1] - 2024-02-01
+
 ## Changed
 
 - Move to serverless
