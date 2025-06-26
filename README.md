@@ -2,6 +2,12 @@
 
 Visualize transit ridership data. Ridership App is a webapp that loads transit ridership data in [GTFS-Ride](https://gtfsride.org) format and creates web-based visualization and data exports.
 
+Two demonstration versions of this app are available:
+
+* [Josephine Community Transit](https://jctridership.gtfsride.org/)
+* [South Metro Area Regional Transit (SMART)](https://smartridership.gtfsride.org/)
+
+
 It is built with [next.js](https://nextjs.org).
 
 <img width="1564" alt="" src="https://user-images.githubusercontent.com/96217/134407005-12a145b7-f892-4067-a812-28d8eec7f6e2.png">
