@@ -1,7 +1,7 @@
 {
   "name": "ridership-app",
   "description": "Visualize and explore transit ridership data from GTFS-Ride.",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": true,
   "keywords": [
     "transit",
